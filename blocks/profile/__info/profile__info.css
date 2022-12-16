@@ -1,0 +1,14 @@
+.profile__info {
+  grid-area: info;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 189px 1fr;
+  grid-template-rows: 1fr min-content;
+}
+
+@media screen and (min-width: 1024px) {
+  .profile__info {
+    width: min-content;
+    grid-template-columns: 294px min-content;
+  }
+}

@@ -1,0 +1,37 @@
+.profile__edit-button {
+  grid-column: 3/4;
+  grid-row: 1/2;
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border: 1px solid #ffffff;
+  margin: 10px 0 0 10px;
+}
+
+.profile__edit-button::before {
+  position: absolute;
+  content: '';
+  width: 8px;
+  height: 8px;
+  top: calc(50% - (8px / 2));
+  left: calc(50% - (8px / 2));
+  background-image: url('../../../images/icons/edit-icon.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media screen and (min-width: 1024px) {
+  .profile__edit-button {
+    grid-column: 2/3;
+    width: 24px;
+    height: 24px;
+    margin: 15px 0 0 18px;
+  }
+
+  .profile__edit-button::before {
+    width: 10px;
+    height: 10px;
+    top: calc(50% - (10px / 2));
+    left: calc(50% - (10px / 2));
+  }
+}
