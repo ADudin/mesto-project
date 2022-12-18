@@ -34,7 +34,7 @@
           <div class="card">
             <img class="card__image" src="./images/cards/monastery.jpg" srcset="./images/cards/monastery@2x.jpg 2x" alt="Фото древнего монастыря в горах">
             <div class="card__info">
-              <p class="card__title">Карачаевск</p>
+              <h2 class="card__title">Карачаевск</h2>
               <button class="card__like-button" type="button" aria-label="Поставить фотографии лайк"></button>
             </div>
           </div>
@@ -44,7 +44,7 @@
           <div class="card">
             <img class="card__image" src="./images/cards/fields.jpg" srcset="./images/cards/fields@2x.jpg 2x" alt="Фото одинокой горы в закатных лучах с полями на переднем плане">
             <div class="card__info">
-              <p class="card__title">Гора Эльбрус</p>
+              <h2 class="card__title">Гора Эльбрус</h2>
               <button class="card__like-button" type="button" aria-label="Поставить фотографии лайк"></button>
             </div>
           </div>
@@ -54,7 +54,7 @@
           <div class="card">
             <img class="card__image" src="./images/cards/mountain.jpg" srcset="./images/cards/mountain@2x.jpg 2x" alt="Фото гороного хребта с ледником у вершины и осенним лесом на переднем плане">
             <div class="card__info">
-              <p class="card__title">Домбай</p>
+              <h2 class="card__title">Домбай</h2>
               <button class="card__like-button" type="button" aria-label="Поставить фотографии лайк"></button>
             </div>
           </div>
@@ -64,7 +64,7 @@
           <div class="card">
             <img class="card__image" src="./images/cards/fields.jpg" srcset="./images/cards/fields@2x.jpg 2x" alt="Фото одинокой горы в закатных лучах с полями на переднем плане">
             <div class="card__info">
-              <p class="card__title">Гора Эльбрус</p>
+              <h2 class="card__title">Гора Эльбрус</h2>
               <button class="card__like-button" type="button" aria-label="Поставить фотографии лайк"></button>
             </div>
           </div>
@@ -74,7 +74,7 @@
           <div class="card">
             <img class="card__image" src="./images/cards/mountain.jpg" srcset="./images/cards/mountain@2x.jpg 2x" alt="Фото гороного хребта с ледником у вершины и осенним лесом на переднем плане">
             <div class="card__info">
-              <p class="card__title">Домбай</p>
+              <h2 class="card__title">Домбай</h2>
               <button class="card__like-button" type="button" aria-label="Поставить фотографии лайк"></button>
             </div>
           </div>
@@ -84,7 +84,7 @@
           <div class="card">
             <img class="card__image" src="./images/cards/monastery.jpg" srcset="./images/cards/monastery@2x.jpg 2x" alt="Фото древнего монастыря в горах">
             <div class="card__info">
-              <p class="card__title">Карачаево-Черкессия</p>
+              <h2 class="card__title">Карачаево-Черкессия</h2>
               <button class="card__like-button" type="button" aria-label="Поставить фотографии лайк"></button>
             </div>
           </div>
@@ -99,15 +99,17 @@
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
 
-  <section class="popup">
-    <form class="popup__container form" action="/" method="post" name="profile">
+  <div class="popup">
+    <div class="popup__container">
       <button class="button popup__close-button" type="button" aria-label="Закрыть модальное окно"></button>
-      <h2 class="form__title">Редактировать профиль</h2>
-      <input class="form__item" type="text" id="user-name" name="user-name" placeholder="Жак-Ив Кусто">
-      <input class="form__item" type="text" id="user-description" name="user-description" placeholder="Исследователь океана">
-      <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения">Сохранить</button>
-    </form>
-  </section>
+      <form class="form" action="/" method="post" name="profile">
+        <h2 class="form__title">Редактировать профиль</h2>
+        <input class="form__item" type="text" id="user-name" name="user-name" placeholder="Жак-Ив Кусто">
+        <input class="form__item" type="text" id="user-description" name="user-description" placeholder="Исследователь океана">
+        <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения">Сохранить</button>
+      </form>
+    </div>
+  </div>
 
 </body>
 </html>
