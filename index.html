@@ -99,7 +99,7 @@
     <p class="footer__copyright">&copy; 2020 Mesto Russia</p>
   </footer>
 
-  <div class="popup">
+  <div class="popup popup_type_edit-user-data">
     <div class="popup__container">
       <button class="button popup__close-button" type="button" aria-label="Закрыть модальное окно"></button>
       <form class="form" action="/" method="post" name="profile">
@@ -107,6 +107,18 @@
         <input class="form__item" type="text" id="user-name" name="user-name" placeholder="Жак-Ив Кусто">
         <input class="form__item" type="text" id="user-description" name="user-description" placeholder="Исследователь океана">
         <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения">Сохранить</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="popup popup_type_add-new-card">
+    <div class="popup__container">
+      <button class="button popup__close-button" type="button" aria-label="Закрыть модальное окно"></button>
+      <form class="form" action="/" method="post" name="add-new-card">
+        <h2 class="form__title">Новое место</h2>
+        <input class="form__item" type="text" id="card-name" name="card-name" placeholder="Название">
+        <input class="form__item" type="text" id="card-image" name="card-image" placeholder="Ссылка на картинку">
+        <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения">Создать</button>
       </form>
     </div>
   </div>

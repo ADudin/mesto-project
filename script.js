@@ -1,47 +1,100 @@
 const profile = document.querySelector('.profile');
 const profileEditButton = profile.querySelector('.profile__edit-button');
-const userNameElement = profile.querySelector('.profile__user-name');
-const userJobElement = profile.querySelector('.profile__user-description');
-const popup = document.querySelector('.popup');
-const popupCloseButton = popup.querySelector('.popup__close-button');
-const formElement = popup.querySelector('.form');
-const nameInput = formElement.querySelector('#user-name');
-const jobInput = formElement.querySelector('#user-description');
+const addNewCardButton = profile.querySelector('.profile__add-button');
+const popups = document.querySelectorAll('.popup');
+const editUserDataPopup = document.querySelector('.popup_type_edit-user-data');
+const addNewCardPopup = document.querySelector('.popup_type_add-new-card');
 
-handleFormUserData = () => {
-  nameInput.placeholder = userNameElement.textContent;
-  jobInput.placeholder = userJobElement.textContent;
+// Popup close/open
+
+const popupOpeningAnimation = [
+  {
+    visibility: 'hidden',
+    opacity: 0
+  },
+  {
+    visibility: 'visible',
+    opacity: 1
+  }
+];
+
+const popupClosingAnimation = [
+  {
+    visibility: 'visible',
+    opacity: 1
+  },
+  {
+    visibility: 'hidden',
+    opacity: 0
+  }
+];
+
+const popupAnimationTiming = {
+  duration: 500,
+  iterations: 1
 }
 
-handleFormSubmit = (evt) => {
-  evt.preventDefault();
+const popupClosingHandler = () => {
+  const popup = document.querySelector('.popup_opened');
+
+  closePopup(popup);
+}
+
+const openPopup = (popup) => {
+  popup.animate(popupOpeningAnimation, popupAnimationTiming);
+  popup.classList.add('popup_opened');
+
+  const popupCloseButton = popup.querySelector('.popup__close-button');
+  popupCloseButton.addEventListener('click', popupClosingHandler);
+}
+
+const closePopup = (popup) => {
+  popup.animate(popupClosingAnimation, popupAnimationTiming);
+  popup.classList.remove('popup_opened');
+
+  const popupCloseButton = popup.querySelector('.popup__close-button');
+  const formElement = popup.querySelector('.form');
+
+  if (formElement) {
+    formElement.reset();
+  }
+
+  popupCloseButton.removeEventListener('click', popupClosingHandler);
+}
+
+// userData processing
+
+const userNameElement = profile.querySelector('.profile__user-name');
+const userJobElement = profile.querySelector('.profile__user-description');
+const userDataFrom = editUserDataPopup.querySelector('.form');
+const nameInput = editUserDataPopup.querySelector('#user-name');
+const jobInput = editUserDataPopup.querySelector('#user-description');
+
+handleUserDataFormSubmit = () => {
   const name = nameInput.value;
   const job = jobInput.value;
 
   userNameElement.textContent = name;
   userJobElement.textContent = job;
+  nameInput.placeholder = name;
+  jobInput.placeholder = job;
 }
 
-popupClosingHandler = () => {
-  if (formElement) {
-    formElement.reset();
-  }
-  
-  popup.classList.remove('popup_opened');
-  popupCloseButton.removeEventListener('click', popupClosingHandler);
-  profileEditButton.addEventListener('click', popupOpeningHandler);
+handleUserDataForm = () => {
+  nameInput.value = userNameElement.textContent;
+  jobInput.value = userJobElement.textContent;
+
+  userDataFrom.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    handleUserDataFormSubmit();
+  });
 }
 
-popupOpeningHandler = () => {
-  popup.classList.add('popup_opened');
+profileEditButton.addEventListener('click', () => {
+  openPopup(editUserDataPopup);
+  handleUserDataForm();
+});
 
-  if (formElement) {
-    handleFormUserData();
-    formElement.addEventListener('submit', handleFormSubmit);
-  }
-  
-  profileEditButton.removeEventListener('click', popupOpeningHandler);
-  popupCloseButton.addEventListener('click', popupClosingHandler);
-}
-
-profileEditButton.addEventListener('click', popupOpeningHandler);
+addNewCardButton.addEventListener('click', () => {
+  openPopup(addNewCardPopup);
+})
