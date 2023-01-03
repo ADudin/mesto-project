@@ -96,23 +96,30 @@ const newCardForm = addNewCardPopup.querySelector('.form');
 const newCardNameInput = addNewCardPopup.querySelector('#card-name');
 const newCardImageLinkInput = addNewCardPopup.querySelector('#card-image');
 
-handleNewCardFormSubmit = () => {
-  const cardName = String(newCardNameInput.value);
-  const cardImageLink = newCardImageLinkInput.value;
-  const cardTextDescription = 'Фотогрфия ' + newCardNameInput.value;
+addNewCard = (name, link) => {
   const cardsList = document.querySelector('.cards__list');
   const cardListElement = document.createElement('li');
   const cardTemplate = document.querySelector('#card-template').content;
   const card = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = card.querySelector('.card__image');
+  const cardLikeButton = card.querySelector('.card__like-button');
 
-  card.querySelector('.card__title').textContent = cardName;
-  cardImage.src = cardImageLink;
-  cardImage.alt = cardTextDescription;
+  card.querySelector('.card__title').textContent = name;
+  cardImage.src = link;
+  cardImage.alt = 'Фотогрфия ' + name;
+  cardLikeButton.addEventListener('click', (evt) => {
+    evt.target.classList.toggle('card__like-button_active');
+  });
 
   cardListElement.append(card);
   cardsList.prepend(cardListElement);
+}
 
+handleNewCardFormSubmit = () => {
+  const cardName = String(newCardNameInput.value);
+  const cardImageLink = newCardImageLinkInput.value;
+  
+  addNewCard(cardName, cardImageLink);
   closePopup(addNewCardPopup);
 }
 
