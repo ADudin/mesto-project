@@ -5,7 +5,7 @@ const popups = document.querySelectorAll('.popup');
 const editUserDataPopup = document.querySelector('.popup_type_edit-user-data');
 const addNewCardPopup = document.querySelector('.popup_type_add-new-card');
 
-// Popup close/open
+// popup close/open
 
 const popupOpeningAnimation = [
   {
@@ -62,7 +62,7 @@ const closePopup = (popup) => {
   popupCloseButton.removeEventListener('click', popupClosingHandler);
 }
 
-// userData processing
+// user data processing
 
 const userNameElement = profile.querySelector('.profile__user-name');
 const userJobElement = profile.querySelector('.profile__user-description');
@@ -90,6 +90,41 @@ handleUserDataForm = () => {
   });
 }
 
+// new cards adding
+
+const newCardForm = addNewCardPopup.querySelector('.form');
+const newCardNameInput = addNewCardPopup.querySelector('#card-name');
+const newCardImageLinkInput = addNewCardPopup.querySelector('#card-image');
+
+handleNewCardFormSubmit = () => {
+  const cardName = String(newCardNameInput.value);
+  const cardImageLink = newCardImageLinkInput.value;
+  const cardTextDescription = 'Фотогрфия ' + newCardNameInput.value;
+  const cardsList = document.querySelector('.cards__list');
+  const cardListElement = document.createElement('li');
+  const cardTemplate = document.querySelector('#card-template').content;
+  const card = cardTemplate.querySelector('.card').cloneNode(true);
+  const cardImage = card.querySelector('.card__image');
+
+  card.querySelector('.card__title').textContent = cardName;
+  cardImage.src = cardImageLink;
+  cardImage.alt = cardTextDescription;
+
+  cardListElement.append(card);
+  cardsList.prepend(cardListElement);
+
+  closePopup(addNewCardPopup);
+}
+
+handleNewCardForm = () => {
+  newCardForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    handleNewCardFormSubmit();
+  });
+}
+
+// main eventListeners
+
 profileEditButton.addEventListener('click', () => {
   openPopup(editUserDataPopup);
   handleUserDataForm();
@@ -97,4 +132,5 @@ profileEditButton.addEventListener('click', () => {
 
 addNewCardButton.addEventListener('click', () => {
   openPopup(addNewCardPopup);
+  handleNewCardForm();
 })
