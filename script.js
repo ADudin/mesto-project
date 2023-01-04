@@ -7,7 +7,7 @@ const addNewCardPopup = document.querySelector('.popup_type_add-new-card');
 
 // popup close/open
 
-const popupOpeningAnimation = [
+const openingAnimation = [
   {
     visibility: 'hidden',
     opacity: 0
@@ -18,7 +18,7 @@ const popupOpeningAnimation = [
   }
 ];
 
-const popupClosingAnimation = [
+const closingAnimation = [
   {
     visibility: 'visible',
     opacity: 1
@@ -29,7 +29,7 @@ const popupClosingAnimation = [
   }
 ];
 
-const popupAnimationTiming = {
+const animationTiming = {
   duration: 500,
   iterations: 1
 }
@@ -41,7 +41,7 @@ const popupClosingHandler = () => {
 }
 
 const openPopup = (popup) => {
-  popup.animate(popupOpeningAnimation, popupAnimationTiming);
+  popup.animate(openingAnimation, animationTiming);
   popup.classList.add('popup_opened');
 
   const popupCloseButton = popup.querySelector('.popup__close-button');
@@ -49,7 +49,7 @@ const openPopup = (popup) => {
 }
 
 const closePopup = (popup) => {
-  popup.animate(popupClosingAnimation, popupAnimationTiming);
+  popup.animate(closingAnimation, animationTiming);
   popup.classList.remove('popup_opened');
 
   const popupCloseButton = popup.querySelector('.popup__close-button');
@@ -70,7 +70,8 @@ const userDataFrom = editUserDataPopup.querySelector('.form');
 const nameInput = editUserDataPopup.querySelector('#user-name');
 const jobInput = editUserDataPopup.querySelector('#user-description');
 
-handleUserDataFormSubmit = () => {
+handleUserDataFormSubmit = (evt) => {
+  evt.preventDefault();
   const name = nameInput.value;
   const job = jobInput.value;
 
@@ -78,19 +79,17 @@ handleUserDataFormSubmit = () => {
   userJobElement.textContent = job;
   nameInput.placeholder = name;
   jobInput.placeholder = job;
+  userDataFrom.removeEventListener('submit', handleUserDataFormSubmit);
 }
 
 handleUserDataForm = () => {
   nameInput.value = userNameElement.textContent;
   jobInput.value = userJobElement.textContent;
 
-  userDataFrom.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    handleUserDataFormSubmit();
-  });
+  userDataFrom.addEventListener('submit', handleUserDataFormSubmit);
 }
 
-// new cards adding
+// new cards adding & removing
 
 const newCardForm = addNewCardPopup.querySelector('.form');
 const newCardNameInput = addNewCardPopup.querySelector('#card-name');
@@ -103,31 +102,36 @@ addNewCard = (name, link) => {
   const card = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = card.querySelector('.card__image');
   const cardLikeButton = card.querySelector('.card__like-button');
+  const cardRemoveButton = card.querySelector('.card__remove-button');
 
   card.querySelector('.card__title').textContent = name;
   cardImage.src = link;
   cardImage.alt = 'Фотогрфия ' + name;
+
   cardLikeButton.addEventListener('click', (evt) => {
     evt.target.classList.toggle('card__like-button_active');
+  });
+
+  cardRemoveButton.addEventListener('click', () => {
+    cardListElement.remove();
   });
 
   cardListElement.append(card);
   cardsList.prepend(cardListElement);
 }
 
-handleNewCardFormSubmit = () => {
+handleNewCardFormSubmit = (evt) => {
+  evt.preventDefault();
   const cardName = String(newCardNameInput.value);
-  const cardImageLink = newCardImageLinkInput.value;
+  const cardImageLink = String(newCardImageLinkInput.value);
   
   addNewCard(cardName, cardImageLink);
+  newCardForm.removeEventListener('submit', handleNewCardFormSubmit);
   closePopup(addNewCardPopup);
 }
 
 handleNewCardForm = () => {
-  newCardForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    handleNewCardFormSubmit();
-  });
+  newCardForm.addEventListener('submit', handleNewCardFormSubmit);
 }
 
 // main eventListeners
