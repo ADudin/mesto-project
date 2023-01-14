@@ -11,6 +11,7 @@
 * Flex layout
 * Media queries
 * Nested BEM CSS
+* Basic vanilla JS dynamic content adding/removing to/from DOM
 
 **Описание**
 

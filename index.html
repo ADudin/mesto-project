@@ -42,8 +42,8 @@
       <button class="button popup__close-button" type="button" aria-label="Закрыть модальное окно"></button>
       <form class="form" action="/" method="post" name="profile">
         <h2 class="form__title">Редактировать профиль</h2>
-        <input class="form__item" type="text" id="user-name" name="user-name" placeholder="Жак-Ив Кусто">
-        <input class="form__item" type="text" id="user-description" name="user-description" placeholder="Исследователь океана">
+        <input class="form__item" type="text" id="user-name" name="user-name" placeholder="Жак-Ив Кусто" required>
+        <input class="form__item" type="text" id="user-description" name="user-description" placeholder="Исследователь океана" required>
         <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения">Сохранить</button>
       </form>
     </div>
@@ -54,10 +54,20 @@
       <button class="button popup__close-button" type="button" aria-label="Закрыть модальное окно"></button>
       <form class="form" action="/" method="post" name="add-new-card">
         <h2 class="form__title">Новое место</h2>
-        <input class="form__item" type="text" id="card-name" name="card-name" placeholder="Название">
-        <input class="form__item" type="text" id="card-image" name="card-image" placeholder="Ссылка на картинку">
+        <input class="form__item" type="text" id="card-name" name="card-name" placeholder="Название" required>
+        <input class="form__item" type="text" id="card-image" name="card-image" placeholder="Ссылка на картинку" required>
         <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения">Создать</button>
       </form>
+    </div>
+  </div>
+
+  <div class="popup popup_type_image popup_strong-background">
+    <div class="popup__container popup__container_wide popup__container_transparent-background popup__container_no-padding">
+      <button class="button popup__close-button" type="button" aria-label="Закрыть модальное окно"></button>
+      <figure class="popup__image-wrapper">
+        <img class="popup__image" src="" alt="">
+        <figcaption class="popup__image-title"></figcaption>
+      </figure>
     </div>
   </div>
 
