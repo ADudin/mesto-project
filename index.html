@@ -42,8 +42,8 @@
       <button class="button popup__close-button" type="button" aria-label="Закрыть модальное окно"></button>
       <form class="form" action="/" method="post" name="profile">
         <h2 class="form__title">Редактировать профиль</h2>
-        <input class="form__item" type="text" id="user-name" name="user-name" placeholder="Жак-Ив Кусто" required>
-        <input class="form__item" type="text" id="user-description" name="user-description" placeholder="Исследователь океана" required>
+        <input class="form__item" type="text" id="user-name" name="user-name" placeholder="Имя" required>
+        <input class="form__item" type="text" id="user-description" name="user-description" placeholder="Профессия" required>
         <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения">Сохранить</button>
       </form>
     </div>
@@ -72,19 +72,18 @@
   </div>
 
   <template id="card-template">
-    <li>
-      <div class="card">
-        <button class="button card__remove-button" type="button" aria-label="Удалить карточку"></button>
-        <img class="card__image" src="" alt="">
-        <div class="card__info">
-          <h2 class="card__title"></h2>
-          <button class="card__like-button" type="button" aria-label="Поставить фотографии лайк"></button>
-        </div>
+    <li class="card">
+      <button class="button card__remove-button" type="button" aria-label="Удалить карточку"></button>
+      <img class="card__image" src="" alt="">
+      <div class="card__info">
+        <h2 class="card__title"></h2>
+        <button class="card__like-button" type="button" aria-label="Поставить фотографии лайк"></button>
       </div>
     </li>
   </template>
 
-  <script src="script.js"></script>
+  <script src="./scripts/cards.js"></script>
+  <script src="./scripts/index.js"></script>
 
 </body>
 </html>
