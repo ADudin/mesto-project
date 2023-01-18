@@ -1,16 +1,31 @@
 const profile = document.querySelector('.profile');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 const buttonAddCard = profile.querySelector('.profile__add-button');
+const userNameElement = profile.querySelector('.profile__user-name');
+const userJobElement = profile.querySelector('.profile__user-description');
+
 const popupEditProfile = document.querySelector('.popup_type_edit-user-data');
 const popupAddCard = document.querySelector('.popup_type_add-new-card');
 const popupCloseButtons = document.querySelectorAll('.popup__close-button');
 
+const userDataForm = popupEditProfile.querySelector('.form');
+const nameInput = popupEditProfile.querySelector('#user-name');
+const jobInput = popupEditProfile.querySelector('#user-description');
+
+const imagePopup = document.querySelector('.popup_type_image');
+const image = imagePopup.querySelector('.popup__image');
+const imageTitle = imagePopup.querySelector('.popup__image-title');
+
+const cardsList = document.querySelector('.cards__list');
+const newCardForm = popupAddCard.querySelector('.form');
+const newCardNameInput = popupAddCard.querySelector('#card-name');
+const newCardImageLinkInput = popupAddCard.querySelector('#card-image');
+const cardTemplate = document.querySelector('#card-template').content;
+
 // popup close/open
 
-const handleClosePopup = () => {
-  const popup = document.querySelector('.popup_opened');
-
-  closePopup(popup);
+const handleClosePopup = (evt) => {
+  closePopup(evt.target.closest('.popup'));
 }
 
 const openPopup = (popup) => {
@@ -22,12 +37,6 @@ const closePopup = (popup) => {
 }
 
 // user data processing
-
-const userNameElement = profile.querySelector('.profile__user-name');
-const userJobElement = profile.querySelector('.profile__user-description');
-const userDataForm = popupEditProfile.querySelector('.form');
-const nameInput = popupEditProfile.querySelector('#user-name');
-const jobInput = popupEditProfile.querySelector('#user-description');
 
 const handleUserDataFormSubmit = (evt) => {
   evt.preventDefault();
@@ -41,16 +50,13 @@ const handleUserDataFormSubmit = (evt) => {
   closePopup(popupEditProfile);
 }
 
-const handleUserDataForm = () => {
+const handleOpenUserDataForm = () => {
   nameInput.value = userNameElement.textContent;
   jobInput.value = userJobElement.textContent;
+  openPopup(popupEditProfile);
 }
 
 // image popup
-
-const imagePopup = document.querySelector('.popup_type_image');
-const image = imagePopup.querySelector('.popup__image');
-const imageTitle = imagePopup.querySelector('.popup__image-title');
 
 const handleImagePopupData = (cardData) => {
   image.src = cardData.link;
@@ -60,12 +66,6 @@ const handleImagePopupData = (cardData) => {
 }
 
 // new cards adding & removing
-
-const cardsList = document.querySelector('.cards__list');
-const newCardForm = popupAddCard.querySelector('.form');
-const newCardNameInput = popupAddCard.querySelector('#card-name');
-const newCardImageLinkInput = popupAddCard.querySelector('#card-image');
-const cardTemplate = document.querySelector('#card-template').content;
 
 const createNewCard = (cardData) => {
   const card = cardTemplate.querySelector('.card').cloneNode(true);
@@ -124,10 +124,7 @@ initialCards.forEach((item) => {
 
 // main eventListeners
 
-profileEditButton.addEventListener('click', () => {
-  openPopup(popupEditProfile);
-  handleUserDataForm();
-});
+profileEditButton.addEventListener('click', handleOpenUserDataForm);
 
 buttonAddCard.addEventListener('click', () => {
   openPopup(popupAddCard);
