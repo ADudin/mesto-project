@@ -40,11 +40,19 @@
   <div class="popup popup_type_edit-user-data">
     <div class="popup__container">
       <button class="button popup__close-button" type="button" aria-label="Закрыть модальное окно"></button>
-      <form class="form" action="/" method="post" name="profile">
+      <form class="form" name="profile" action="/" method="post" novalidate>
         <h2 class="form__title">Редактировать профиль</h2>
-        <input class="form__item" type="text" id="user-name" name="user-name" placeholder="Имя" required>
-        <input class="form__item" type="text" id="user-description" name="user-description" placeholder="Профессия" required>
-        <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения">Сохранить</button>
+        <fieldset class="form__set">
+          <label class="form__field">
+            <input class="form__item" type="text" id="user-name" name="user-name" placeholder="Имя" minlength="2" maxlength="40" required>
+            <span class="form__item-error user-name-input-error"></span>
+          </label>
+          <label class="form__field">
+            <input class="form__item" type="text" id="user-description" name="user-description" placeholder="Профессия" minlength="2" maxlength="200" required>
+            <span class="form__item-error user-description-input-error"></span>
+          </label>
+          <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения" disabled>Сохранить</button>
+        </fieldset>
       </form>
     </div>
   </div>
@@ -52,11 +60,19 @@
   <div class="popup popup_type_add-new-card">
     <div class="popup__container">
       <button class="button popup__close-button" type="button" aria-label="Закрыть модальное окно"></button>
-      <form class="form" action="/" method="post" name="add-new-card">
+      <form class="form" action="/" method="post" name="add-new-card" novalidate>
         <h2 class="form__title">Новое место</h2>
-        <input class="form__item" type="text" id="card-name" name="card-name" placeholder="Название" required>
-        <input class="form__item" type="text" id="card-image" name="card-image" placeholder="Ссылка на картинку" required>
-        <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения">Создать</button>
+        <fieldset class="form__set">
+          <label class="form__field">
+            <input class="form__item" type="text" id="card-name" name="card-name" placeholder="Название" required>
+            <span class="form__item-error user-name-input-error"></span>
+          </label>
+          <label class="form__field"> 
+            <input class="form__item" type="text" id="card-image" name="card-image" placeholder="Ссылка на картинку" required>
+            <span class="form__item-error user-name-input-error"></span>
+          </label>
+          <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения">Создать</button>
+        </fieldset>
       </form>
     </div>
   </div>

@@ -10,7 +10,7 @@
   border-radius: 2px;
   cursor: pointer;
   padding: 14px 0;
-  margin-top: 45px;
+  margin-top: 21px;
 }
 
 .form__submit:hover {
@@ -24,6 +24,5 @@
 @media screen and (min-width: 1024px) {
   .form__submit {
     font-size: 18px;
-    margin-top: 48px;
   }
 }

@@ -1,0 +1,10 @@
+.form__item-error {
+  width: 100%;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1.2;
+  color: #FF0000;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+}
