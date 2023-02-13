@@ -140,6 +140,79 @@ initialCards.forEach((item) => {
   renderCard(item, cardsList);
 });
 
+// form validation
+
+const showInputError = (formElement, inputElement, errorMessage) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-input-error`);
+
+  inputElement.classList.add('form__item_type_error');
+  errorElement.textContent = errorMessage;
+  errorElement.classList.add('form__item-error_active');
+}
+
+const hideInputError = (formElement, inputElement) => {
+  const errorElement = formElement.querySelector(`.${inputElement.id}-input-error`);
+
+  inputElement.classList.remove('form__item_type_error');
+  errorElement.classList.remove('form__item-error_active');
+  errorElement.textContent = '';
+}
+
+const checkInputValidity = (formElement, inputElement) => {
+  if (!inputElement.validity.valid) {
+    showInputError(formElement, inputElement, inputElement.validationMessage);
+  } else {
+    hideInputError(formElement, inputElement);
+  }
+}
+
+const setEventListeners = (formElement) => {
+  const inputList = Array.from(formElement.querySelectorAll('.form__item'));
+  const buttonElement = formElement.querySelector('.form__submit');
+
+  toggleButtonState(inputList, buttonElement);
+
+  inputList.forEach((inputElement) => {
+    inputElement.addEventListener('input', () => {
+      checkInputValidity(formElement, inputElement);
+      toggleButtonState(inputList, buttonElement);
+    });
+  });
+}
+
+const enableValidation = () => {
+  const formList = Array.from(document.querySelectorAll('.form'));
+
+  formList.forEach((formElement) => {
+    formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+    });
+
+    const fieldsetList = Array.from(formElement.querySelectorAll('.form__set'));
+    
+    fieldsetList.forEach((fieldset) => {
+      setEventListeners(fieldset);
+    });
+  });
+}
+
+const hasInvalidinput = (inputList) => {
+
+  return inputList.some((inputElement) => {
+    return !inputElement.validity.valid;
+  });
+}
+
+const toggleButtonState = (inputList, buttonElement) => {
+  if (hasInvalidinput(inputList)) {
+    buttonElement.setAttribute('disabled', true);
+    buttonElement.classList.add('form__submit_inactive');
+  } else {
+    buttonElement.removeAttribute('disabled');
+    buttonElement.classList.remove('form__submit_inactive');
+  }
+}
+
 // main eventListeners
 
 profileEditButton.addEventListener('click', handleOpenUserDataForm);
@@ -156,3 +229,5 @@ popupCloseButtons.forEach((item) => {
 userDataForm.addEventListener('submit', handleUserDataFormSubmit);
 
 newCardForm.addEventListener('submit', handleNewCardFormSubmit);
+
+enableValidation();
