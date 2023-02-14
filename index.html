@@ -44,11 +44,33 @@
         <h2 class="form__title">Редактировать профиль</h2>
         <fieldset class="form__set">
           <label class="form__field">
-            <input class="form__item" type="text" id="user-name" name="user-name" placeholder="Имя" minlength="2" maxlength="40" required>
+            <input 
+              class="form__item" 
+              type="text" 
+              id="user-name" 
+              name="user-name" 
+              placeholder="Имя" 
+              minlength="2" 
+              maxlength="40"
+              pattern="^[a-zA-ZА-ЯЁа-яё\s\-]+$"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+              required
+            >
             <span class="form__item-error user-name-input-error"></span>
           </label>
           <label class="form__field">
-            <input class="form__item" type="text" id="user-description" name="user-description" placeholder="Профессия" minlength="2" maxlength="200" required>
+            <input 
+              class="form__item" 
+              type="text" 
+              id="user-description" 
+              name="user-description" 
+              placeholder="Профессия" 
+              minlength="2" 
+              maxlength="200"
+              pattern="^[a-zA-ZА-ЯЁа-яё\s\-]+$"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+              required
+            >
             <span class="form__item-error user-description-input-error"></span>
           </label>
           <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения" disabled>Сохранить</button>
@@ -64,11 +86,29 @@
         <h2 class="form__title">Новое место</h2>
         <fieldset class="form__set">
           <label class="form__field">
-            <input class="form__item" type="text" id="card-name" name="card-name" placeholder="Название" minlength="2" maxlength="30" required>
+            <input 
+              class="form__item" 
+              type="text" 
+              id="card-name" 
+              name="card-name" 
+              placeholder="Название" 
+              minlength="2" 
+              maxlength="30"
+              pattern="^[a-zA-ZА-ЯЁа-яё\s\-]+$"
+              data-error-message="Разрешены только латинские, кириллические буквы, знаки дефиса и пробелы"
+              required
+            >
             <span class="form__item-error card-name-input-error"></span>
           </label>
           <label class="form__field"> 
-            <input class="form__item" type="url" id="card-image" name="card-image" placeholder="Ссылка на картинку" required>
+            <input 
+              class="form__item" 
+              type="url" 
+              id="card-image" 
+              name="card-image" 
+              placeholder="Ссылка на картинку" 
+              required
+            >
             <span class="form__item-error card-image-input-error"></span>
           </label>
           <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения">Создать</button>
