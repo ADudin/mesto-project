@@ -1,17 +1,20 @@
+import '../pages/index.css';
+import { initialCards } from './initialCards.js';
+
 import {
   popupCloseButtons,
   openPopup,
   handleClosePopup
-} from './components/modal.js';
+} from './modal.js';
 
 import { 
   profileEditButton,
   userDataForm,
   handleUserDataFormSubmit,
   handleOpenUserDataForm
-} from './components/modalUserInfo.js';
+} from './modalUserInfo.js';
 
-import {renderCard} from './components/card.js';
+import {renderCard} from './card.js';
 
 import { 
   buttonAddCard,
@@ -20,12 +23,12 @@ import {
   cardsList,
   handleNewCardFormSubmit,
   handleNewCardForm
-} from './components/modalAddCard.js';
+} from './modalAddCard.js';
 
 import {
   form,
   enableValidation
-} from './components/validate.js';
+} from './validate.js';
 
 initialCards.forEach((item) => {
   renderCard(item, cardsList);

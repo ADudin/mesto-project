@@ -1,7 +1,7 @@
 # Проект: Место
 
 Студент: Александр Дудин  
-Наставник: Мария Шукшина  
+Наставники: Мария Шукшина, Алексей Гмитрон, Алексей Попков
 21-й поток профессии “Веб-разработчик плюс”  
 [Ссылка на опубликованный проект](https://adudin.github.io/mesto-project/)
 
@@ -12,6 +12,8 @@
 * Media queries
 * Nested BEM CSS
 * Basic vanilla JS dynamic content adding/removing to/from DOM
+* Custom JS form validation
+* Webpack project assembling
 
 **Описание**
 
