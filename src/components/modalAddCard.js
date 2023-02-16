@@ -21,12 +21,8 @@ const handleNewCardFormSubmit = (evt) => {
   }
   
   renderCard(cardData, cardsList);
+  evt.target.reset();
   closePopup(popupAddCard);
-}
-
-const handleNewCardForm = () => {
-  newCardNameInput.value = '';
-  newCardImageLinkInput.value = '';
 }
 
 export {
@@ -34,6 +30,5 @@ export {
   popupAddCard, 
   newCardForm,
   cardsList,
-  handleNewCardFormSubmit, 
-  handleNewCardForm
+  handleNewCardFormSubmit
 };

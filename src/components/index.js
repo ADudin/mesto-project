@@ -22,11 +22,10 @@ import {
   newCardForm,
   cardsList,
   handleNewCardFormSubmit,
-  handleNewCardForm
 } from './modalAddCard.js';
 
 import {
-  form,
+  validationParams,
   enableValidation
 } from './validate.js';
 
@@ -38,7 +37,6 @@ profileEditButton.addEventListener('click', handleOpenUserDataForm);
 
 buttonAddCard.addEventListener('click', () => {
   openPopup(popupAddCard);
-  handleNewCardForm();
 });
 
 popupCloseButtons.forEach((item) => {
@@ -49,4 +47,4 @@ userDataForm.addEventListener('submit', handleUserDataFormSubmit);
 
 newCardForm.addEventListener('submit', handleNewCardFormSubmit);
 
-enableValidation(form);
+enableValidation(validationParams);
