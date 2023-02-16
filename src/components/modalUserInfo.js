@@ -6,7 +6,7 @@ import {
 
 const popupEditProfile = document.querySelector('.popup_type_edit-user-data');
 const profileEditButton = profile.querySelector('.profile__edit-button');
-const userDataForm = popupEditProfile.querySelector('.form');
+const userDataForm = document.forms['profile'];
 
 const userNameElement = profile.querySelector('.profile__user-name');
 const userJobElement = profile.querySelector('.profile__user-description');

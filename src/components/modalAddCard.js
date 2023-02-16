@@ -7,7 +7,7 @@ import {renderCard} from "./card.js";
 
 const buttonAddCard = profile.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('.popup_type_add-new-card');
-const newCardForm = popupAddCard.querySelector('.form');
+const newCardForm = document.forms['add-new-card'];
 const newCardNameInput = popupAddCard.querySelector('#card-name');
 const newCardImageLinkInput = popupAddCard.querySelector('#card-image');
 const cardsList = document.querySelector('.cards__list');
