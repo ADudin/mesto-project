@@ -5,7 +5,7 @@ const handleEscClosePopup = (evt) => {
   if (evt.key === 'Escape') {
     const activePopup = document.querySelector('.popup_opened');
     closePopup(activePopup);
-    document.removeEventListener('keydown', handleEscClosePopup);
+    // document.removeEventListener('keydown', handleEscClosePopup);
   }
 }
 
@@ -29,6 +29,7 @@ const openPopup = (popup) => {
 
 const closePopup = (popup) => {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', handleEscClosePopup);
 }
 
 export {
