@@ -1,5 +1,5 @@
 import '../pages/index.css';
-import { initialCards } from './initialCards.js';
+import { getCards } from './api.js';
 
 import {
   popupCloseButtons,
@@ -29,10 +29,6 @@ import {
   enableValidation
 } from './validate.js';
 
-initialCards.forEach((item) => {
-  renderCard(item, cardsList);
-});
-
 profileEditButton.addEventListener('click', handleOpenUserDataForm);
 
 buttonAddCard.addEventListener('click', () => {
@@ -48,3 +44,9 @@ userDataForm.addEventListener('submit', handleUserDataFormSubmit);
 newCardForm.addEventListener('submit', handleNewCardFormSubmit);
 
 enableValidation(validationParams);
+
+getCards().then((cards) => {
+  cards.forEach((card) => {
+    renderCard(card, cardsList);
+  });
+});
