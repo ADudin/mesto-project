@@ -1,5 +1,4 @@
 const popupCloseButtons = document.querySelectorAll('.popup__close-button');
-const profile = document.querySelector('.profile');
 
 const handleEscClosePopup = (evt) => {
   if (evt.key === 'Escape') {
@@ -33,7 +32,6 @@ const closePopup = (popup) => {
 
 export {
   popupCloseButtons, 
-  profile, 
   openPopup, 
   closePopup, 
   handleClosePopup

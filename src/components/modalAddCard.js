@@ -1,9 +1,6 @@
-import {
-  profile,
-  closePopup
-} from "./modal.js";
-
-import {renderCard} from "./card.js";
+import { profile } from './profile.js';
+import { closePopup } from './modal.js';
+import { renderCard } from './card.js';
 
 const buttonAddCard = profile.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('.popup_type_add-new-card');

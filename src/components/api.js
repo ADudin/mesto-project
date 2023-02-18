@@ -19,7 +19,28 @@ const getCards = () => {
   })
   .catch((error) => {
     console.log(`Ошибка загрузки карточек. Ошибка ${error}`);
-  })
+  });
 }
 
-export {getCards};
+const getUserData = () => {
+  return fetch(`https://nomoreparties.co/v1/${config.cohortId}/users/me`, {
+    headers: {
+      authorization: config.token
+    }
+  })
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject(res.status);
+  })
+  .catch((error) => {
+    console.log(`Ошибка загрузки информации о пользователе. Ошибка ${error}`);
+  });
+}
+
+export {
+  getCards,
+  getUserData
+};

@@ -1,5 +1,11 @@
 import '../pages/index.css';
-import { getCards } from './api.js';
+
+import { renderUserInfo } from './profile.js';
+
+import { 
+  getCards,
+  getUserData
+} from './api.js';
 
 import {
   popupCloseButtons,
@@ -49,4 +55,9 @@ getCards().then((cards) => {
   cards.forEach((card) => {
     renderCard(card, cardsList);
   });
+});
+
+getUserData().then((data) => {
+  console.log(data);
+  renderUserInfo(data);
 });

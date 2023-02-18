@@ -1,5 +1,10 @@
-import {
+import { 
   profile,
+  userNameElement,
+  userJobElement
+} from './profile.js';
+
+import {
   closePopup,
   openPopup
 } from './modal.js';
@@ -7,9 +12,6 @@ import {
 const popupEditProfile = document.querySelector('.popup_type_edit-user-data');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 const userDataForm = document.forms['profile'];
-
-const userNameElement = profile.querySelector('.profile__user-name');
-const userJobElement = profile.querySelector('.profile__user-description');
 const nameInput = popupEditProfile.querySelector('#user-name');
 const jobInput = popupEditProfile.querySelector('#user-description');
 
