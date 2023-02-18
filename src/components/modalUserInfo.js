@@ -9,6 +9,8 @@ import {
   openPopup
 } from './modal.js';
 
+import { updateUserData } from './api.js';
+
 const popupEditProfile = document.querySelector('.popup_type_edit-user-data');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 const userDataForm = document.forms['profile'];
@@ -19,12 +21,15 @@ const jobInput = popupEditProfile.querySelector('#user-description');
 const handleUserDataFormSubmit = (evt) => {
   evt.preventDefault();
 
-  const name = nameInput.value;
-  const job = jobInput.value;
+  const userData = {};
 
-  userNameElement.textContent = name;
-  userJobElement.textContent = job;
+  userData.name = nameInput.value;
+  userData.about = jobInput.value;
 
+  userNameElement.textContent = userData.name;
+  userJobElement.textContent = userData.about;
+
+  updateUserData(userData);
   closePopup(popupEditProfile);
 }
 

@@ -58,6 +58,5 @@ getCards().then((cards) => {
 });
 
 getUserData().then((data) => {
-  console.log(data);
   renderUserInfo(data);
 });

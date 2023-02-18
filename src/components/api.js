@@ -40,7 +40,32 @@ const getUserData = () => {
   });
 }
 
+const updateUserData = (userData) => {
+  return fetch(`https://nomoreparties.co/v1/${config.cohortId}/users/me`, {
+    method: 'PATCH',
+    headers: {
+      authorization: config.token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: userData.name,
+      about: userData.about
+    })
+  })
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject(res.status);
+  })
+  .catch((error) => {
+    console.log(`Ошибка обновления информации о пользователе. Ошибка ${error}`);
+  });
+}
+
 export {
   getCards,
-  getUserData
+  getUserData,
+  updateUserData
 };
