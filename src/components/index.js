@@ -47,6 +47,7 @@ enableValidation(validationParams);
 
 getCards().then((cards) => {
   cards.forEach((card) => {
+    console.log(card);
     renderCard(card, cardsList);
   });
 });
