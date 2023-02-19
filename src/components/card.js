@@ -1,5 +1,10 @@
 import {handleImagePopupData} from './modalImage.js';
 
+import { 
+  getUserData,
+  deleteCard
+} from './api.js';
+
 const cardTemplate = document.querySelector('#card-template').content;
 
 const createNewCard = (cardData) => {
@@ -23,7 +28,16 @@ const createNewCard = (cardData) => {
     evt.target.classList.toggle('card__like-button_active');
   });
 
+  getUserData()
+    .then((userData) => {
+      if (userData._id !== cardData.owner._id) {
+        cardRemoveButton.remove();
+      }
+    }
+  );
+
   cardRemoveButton.addEventListener('click', () => {
+    deleteCard(cardData);
     card.remove();
   });
 

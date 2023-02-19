@@ -1,6 +1,7 @@
 import { profile } from './profile.js';
 import { closePopup } from './modal.js';
 import { renderCard } from './card.js';
+import { uploadNewCard } from './api.js';
 
 const buttonAddCard = profile.querySelector('.profile__add-button');
 const popupAddCard = document.querySelector('.popup_type_add-new-card');
@@ -14,10 +15,15 @@ const handleNewCardFormSubmit = (evt) => {
   
   const cardData = {
     name: newCardNameInput.value,
-    link: newCardImageLinkInput.value
+    link: newCardImageLinkInput.value,
   }
   
-  renderCard(cardData, cardsList);
+  uploadNewCard(cardData)
+    .then((cardData) => {
+      renderCard(cardData, cardsList)
+    }
+  );
+
   evt.target.reset();
   closePopup(popupAddCard);
 }

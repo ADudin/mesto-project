@@ -23,7 +23,7 @@ const getCards = () => {
 }
 
 const getUserData = () => {
-  return fetch(`https://nomoreparties.co/v1/${config.cohortId}/users/me`, {
+  return fetch(`${config.serverUrl}/v1/${config.cohortId}/users/me`, {
     headers: {
       authorization: config.token
     }
@@ -41,7 +41,7 @@ const getUserData = () => {
 }
 
 const updateUserData = (userData) => {
-  return fetch(`https://nomoreparties.co/v1/${config.cohortId}/users/me`, {
+  return fetch(`${config.serverUrl}/v1/${config.cohortId}/users/me`, {
     method: 'PATCH',
     headers: {
       authorization: config.token,
@@ -64,8 +64,53 @@ const updateUserData = (userData) => {
   });
 }
 
+const uploadNewCard = (cardData) => {
+  return fetch(`${config.serverUrl}/v1/${config.cohortId}/cards`, {
+    method: 'POST',
+    headers: {
+      authorization: config.token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: cardData.name,
+      link: cardData.link
+    })
+  })
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject(res.status);
+  })
+  .catch((error) => {
+    console.log(`Ошибка добавления информации о новой карточке. Ошибка ${error}`);
+  });
+}
+
+const deleteCard = (cardData) => {
+  return fetch(`${config.serverUrl}/v1/${config.cohortId}/cards/${cardData._id}`, {
+    method: 'DELETE',
+    headers: {
+      authorization: config.token,
+    }
+  })
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject(res.status);
+  })
+  .catch((error) => {
+    console.log(`Ошибка удаления карточки. Ошибка ${error}`);
+  });
+}
+
 export {
   getCards,
   getUserData,
-  updateUserData
+  updateUserData,
+  uploadNewCard,
+  deleteCard
 };
