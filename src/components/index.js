@@ -1,6 +1,6 @@
 import '../pages/index.css';
 
-import { renderUserInfo } from './profile.js';
+import { setUserId, renderUserInfo } from './profile.js';
 
 import { 
   getCards,
@@ -51,12 +51,13 @@ newCardForm.addEventListener('submit', handleNewCardFormSubmit);
 
 enableValidation(validationParams);
 
+getUserData().then((data) => {
+  renderUserInfo(data);
+  setUserId(data);
+});
+
 getCards().then((cards) => {
   cards.forEach((card) => {
     renderCard(card, cardsList);
   });
-});
-
-getUserData().then((data) => {
-  renderUserInfo(data);
 });

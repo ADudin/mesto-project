@@ -107,10 +107,50 @@ const deleteCard = (cardData) => {
   });
 }
 
+const setLike = (cardData) => {
+  return fetch(`${config.serverUrl}/v1/${config.cohortId}/cards/likes/${cardData._id}`, {
+    method: 'PUT',
+    headers: {
+      authorization: config.token,
+    }
+  })
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject(res.status);
+  })
+  .catch((error) => {
+    console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
+  });
+}
+
+const deleteLike = (cardData) => {
+  return fetch(`${config.serverUrl}/v1/${config.cohortId}/cards/likes/${cardData._id}`, {
+    method: 'DELETE',
+    headers: {
+      authorization: config.token,
+    }
+  })
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject(res.status);
+  })
+  .catch((error) => {
+    console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
+  });
+}
+
 export {
   getCards,
   getUserData,
   updateUserData,
   uploadNewCard,
-  deleteCard
+  deleteCard,
+  setLike,
+  deleteLike
 };
