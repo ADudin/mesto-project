@@ -3,7 +3,7 @@ const userAvatarElement = profile.querySelector('.profile__avatar');
 const userNameElement = profile.querySelector('.profile__user-name');
 const userJobElement = profile.querySelector('.profile__user-description');
 
-const setUserId = (userData) => {
+const setUserData = (userData) => {
   profile.setAttribute('data-id', userData._id);
 }
 
@@ -17,6 +17,7 @@ export {
   profile,
   userNameElement,
   userJobElement,
-  setUserId,
+  userAvatarElement,
+  setUserData,
   renderUserInfo
 };

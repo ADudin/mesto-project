@@ -145,10 +145,34 @@ const deleteLike = (cardData) => {
   });
 }
 
+const updateUserAvatar = (userData) => {
+  return fetch(`${config.serverUrl}/v1/${config.cohortId}/users/me/avatar`, {
+    method: 'PATCH',
+    headers: {
+      authorization: config.token,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      avatar: userData.avatar
+    })
+  })
+  .then((res) => {
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject(res.status);
+  })
+  .catch((error) => {
+    console.log(`Ошибка обновления аватара пользователя. Ошибка ${error}`);
+  });
+}
+
 export {
   getCards,
   getUserData,
   updateUserData,
+  updateUserAvatar,
   uploadNewCard,
   deleteCard,
   setLike,

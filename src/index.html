@@ -17,13 +17,14 @@
   <main class="content">
 
     <section class="profile">
-      <img class="profile__avatar" src="<%=require('./images/profile/Avatar.jpg')%>" alt="Фото Жака-Ива Кусто в ярко-красной шапке и голубой рубашке на фоне моря">
+      <img class="profile__avatar" src="" alt="">
       <div class="profile__info">
         <h1 class="profile__user-name">Жак-Ив Кусто</h1>
         <p class="profile__user-description">Исследователь океана</p>
         <button class="button profile__edit-button" type="button" aria-label="Редактировать профиль пользователя"></button>
       </div>
       <button class="button profile__add-button" type="button" aria-label="Добавить изображение"></button>
+      <button class="profile__edit-avatar-button" type="button" aria-label="Редактировать аватар пользователя"></button>
     </section>
 
     <section class="cards" aria-label="Галерея фотографий">
@@ -123,6 +124,29 @@
         <img class="popup__image" src="" alt="">
         <figcaption class="popup__image-title"></figcaption>
       </figure>
+    </div>
+  </div>
+
+  <div class="popup popup_type_edit-user-avatar">
+    <div class="popup__container">
+      <button class="button popup__close-button" type="button" aria-label="Закрыть модальное окно"></button>
+      <form class="form" action="/" method="post" name="user-avatar" novalidate>
+        <h2 class="form__title">Обновить аватар</h2>
+        <fieldset class="form__set">
+          <label class="form__field"> 
+            <input 
+              class="form__item" 
+              type="url" 
+              id="user-avatar" 
+              name="user-avatar" 
+              placeholder="Ссылка на изображение"
+              required
+            >
+            <span class="form__item-error user-avatar-input-error"></span>
+          </label>
+          <button class="form__submit" type="submit" name="submit" aria-label="Сохранить изменения">Сохранить</button>
+        </fieldset>
+      </form>
     </div>
   </div>
 

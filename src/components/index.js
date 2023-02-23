@@ -1,6 +1,9 @@
 import '../pages/index.css';
 
-import { setUserId, renderUserInfo } from './profile.js';
+import { 
+  setUserData, 
+  renderUserInfo
+} from './profile.js';
 
 import { 
   getCards,
@@ -20,6 +23,13 @@ import {
   handleOpenUserDataForm
 } from './modalUserInfo.js';
 
+import { 
+  editUserAvatarButton,
+  userAvatarForm,
+  handleUserAvatarFormSubmit,
+  handleOpenUserAvatarForm
+} from './modalEditAvatar.js';
+
 import {renderCard} from './card.js';
 
 import { 
@@ -36,6 +46,7 @@ import {
 } from './validate.js';
 
 profileEditButton.addEventListener('click', handleOpenUserDataForm);
+editUserAvatarButton.addEventListener('click', handleOpenUserAvatarForm);
 
 buttonAddCard.addEventListener('click', () => {
   openPopup(popupAddCard);
@@ -46,14 +57,14 @@ popupCloseButtons.forEach((item) => {
 });
 
 userDataForm.addEventListener('submit', handleUserDataFormSubmit);
-
+userAvatarForm.addEventListener('submit', handleUserAvatarFormSubmit);
 newCardForm.addEventListener('submit', handleNewCardFormSubmit);
 
 enableValidation(validationParams);
 
 getUserData().then((data) => {
   renderUserInfo(data);
-  setUserId(data);
+  setUserData(data);
 });
 
 getCards().then((cards) => {
