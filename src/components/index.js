@@ -34,6 +34,7 @@ import {renderCard} from './card.js';
 
 import { 
   buttonAddCard,
+  //submitButtonAddCard,
   popupAddCard,
   newCardForm,
   cardsList,
@@ -45,8 +46,11 @@ import {
   enableValidation
 } from './validate.js';
 
+//import { renderLoading } from './utils.js';
+
 profileEditButton.addEventListener('click', handleOpenUserDataForm);
 editUserAvatarButton.addEventListener('click', handleOpenUserAvatarForm);
+//submitButtonAddCard.addEventListener('click', renderLoading(true, submitButtonAddCard, 'Создать'));
 
 buttonAddCard.addEventListener('click', () => {
   openPopup(popupAddCard);
