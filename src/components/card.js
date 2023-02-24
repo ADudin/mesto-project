@@ -1,8 +1,9 @@
 import { handleImagePopupData } from './modalImage.js';
 import { profile } from './profile.js';
+import { openPopup } from './modal.js';
+import { popupRemoveCard } from './modalRemoveCard.js';
 
 import { 
-  deleteCard,
   setLike,
   deleteLike
 } from './api.js';
@@ -52,6 +53,7 @@ const createNewCard = (cardData) => {
   const userId = profile.getAttribute('data-id');
 
   card.querySelector('.card__title').textContent = cardData.name;
+  card.setAttribute('data-id', cardData._id);
   cardImage.src = cardData.link;
   cardImage.alt = `Фотография ${cardData.name}`;
   
@@ -69,8 +71,8 @@ const createNewCard = (cardData) => {
   });
 
   cardRemoveButton.addEventListener('click', () => {
-    deleteCard(cardData);
-    card.remove();
+    openPopup(popupRemoveCard);
+    popupRemoveCard.setAttribute('data-id', cardData._id);
   });
 
   cardImage.addEventListener('click', () => {
