@@ -1,3 +1,5 @@
+import { checkResponse } from './utils.js';
+
 const config = {
   cohortId: 'plus-cohort-21',
   token: 'e22a7236-eb1c-4145-a157-f86fa0ccbc4e',
@@ -10,16 +12,7 @@ const getCards = () => {
       authorization: config.token
     }
   })
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-
-    return Promise.reject(res.status);
-  })
-  .catch((error) => {
-    console.log(`Ошибка загрузки карточек. Ошибка ${error}`);
-  });
+  .then(checkResponse);
 }
 
 const getUserData = () => {
@@ -28,16 +21,7 @@ const getUserData = () => {
       authorization: config.token
     }
   })
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-
-    return Promise.reject(res.status);
-  })
-  .catch((error) => {
-    console.log(`Ошибка загрузки информации о пользователе. Ошибка ${error}`);
-  });
+  .then(checkResponse);
 }
 
 const updateUserData = (userData) => {
@@ -52,16 +36,7 @@ const updateUserData = (userData) => {
       about: userData.about
     })
   })
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-
-    return Promise.reject(res.status);
-  })
-  .catch((error) => {
-    console.log(`Ошибка обновления информации о пользователе. Ошибка ${error}`);
-  });
+  .then(checkResponse);
 }
 
 const uploadNewCard = (cardData) => {
@@ -76,16 +51,7 @@ const uploadNewCard = (cardData) => {
       link: cardData.link
     })
   })
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-
-    return Promise.reject(res.status);
-  })
-  .catch((error) => {
-    console.log(`Ошибка добавления информации о новой карточке. Ошибка ${error}`);
-  });
+  .then(checkResponse);
 }
 
 const deleteCard = (cardData) => {
@@ -95,16 +61,7 @@ const deleteCard = (cardData) => {
       authorization: config.token,
     }
   })
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-
-    return Promise.reject(res.status);
-  })
-  .catch((error) => {
-    console.log(`Ошибка удаления карточки. Ошибка ${error}`);
-  });
+  .then(checkResponse);
 }
 
 const setLike = (cardData) => {
@@ -114,16 +71,7 @@ const setLike = (cardData) => {
       authorization: config.token,
     }
   })
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-
-    return Promise.reject(res.status);
-  })
-  .catch((error) => {
-    console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
-  });
+  .then(checkResponse);
 }
 
 const deleteLike = (cardData) => {
@@ -133,16 +81,7 @@ const deleteLike = (cardData) => {
       authorization: config.token,
     }
   })
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-
-    return Promise.reject(res.status);
-  })
-  .catch((error) => {
-    console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
-  });
+  .then(checkResponse);
 }
 
 const updateUserAvatar = (userData) => {
@@ -156,16 +95,7 @@ const updateUserAvatar = (userData) => {
       avatar: userData.avatar
     })
   })
-  .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-
-    return Promise.reject(res.status);
-  })
-  .catch((error) => {
-    console.log(`Ошибка обновления аватара пользователя. Ошибка ${error}`);
-  });
+  .then(checkResponse);
 }
 
 export {

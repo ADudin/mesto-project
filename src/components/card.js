@@ -35,12 +35,20 @@ const handleLikeClick = (clickElement, cardData, likesCountElement) => {
     deleteLike(cardData)
       .then((data) => {
         updateLikesCountElement(likesCountElement, data.likes.length);
-    });
+      })
+      .catch((error) => {
+        console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
+      }
+    );
   } else {
     setLike(cardData)
       .then((data) => {
         updateLikesCountElement(likesCountElement, data.likes.length);
-    });
+      })
+      .catch((error) => {
+        console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
+      }
+    );
   }
 }
 

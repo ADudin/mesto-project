@@ -62,13 +62,23 @@ newCardForm.addEventListener('submit', handleNewCardFormSubmit);
 
 enableValidation(validationParams);
 
-getUserData().then((data) => {
-  renderUserInfo(data);
-  setUserData(data);
-});
+getUserData()
+  .then((data) => {
+    renderUserInfo(data);
+    setUserData(data);
+  })
+  .catch((error) => {
+    console.log(`Ошибка загрузки информации о пользователе. Ошибка ${error}`);
+  }
+);
 
-getCards().then((cards) => {
-  cards.forEach((card) => {
-    renderCard(card, cardsList);
-  });
-});
+getCards()
+  .then((cards) => {
+    cards.forEach((card) => {
+      renderCard(card, cardsList);
+    });
+  })
+  .catch((error) => {
+    console.log(`Ошибка загрузки карточек. Ошибка ${error}`);
+  }
+);

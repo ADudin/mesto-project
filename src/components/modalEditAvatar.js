@@ -28,6 +28,9 @@ const handleUserAvatarFormSubmit = (evt) => {
   userAvatarElement.alt = 'Изображение аватара пользователя';
 
   updateUserAvatar(userData)
+    .catch((error) => {
+      console.log(`Ошибка обновления аватара пользователя. Ошибка ${error}`);
+    })
     .finally(() => {
       renderLoading(false, submitButtonEditAvatar, 'Сохранить');
     }

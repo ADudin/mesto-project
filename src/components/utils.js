@@ -6,4 +6,15 @@ const renderLoading = (isLoading, button, text) => {
   }
 }
 
-export {renderLoading};
+const checkResponse = (res) => {
+  if (res.ok) {
+    return res.json();
+  }
+
+  return Promise.reject(`Ошибка ${res.status}`);
+}
+
+export {
+  renderLoading,
+  checkResponse
+};

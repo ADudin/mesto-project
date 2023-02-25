@@ -9,7 +9,12 @@ const handleCardRemove = () => {
   cardData._id = popupRemoveCard.getAttribute('data-id');
   const cardToDelete = document.querySelector(`.card[data-id='${cardData._id}']`);
   
-  deleteCard(cardData);
+  deleteCard(cardData)
+    .catch((error) => {
+      console.log(`Ошибка удаления карточки. Ошибка ${error}`);
+    }
+  );
+  
   cardToDelete.remove();
   
   closePopup(popupRemoveCard);

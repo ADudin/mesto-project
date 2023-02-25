@@ -25,6 +25,9 @@ const handleNewCardFormSubmit = (evt) => {
     .then((cardData) => {
       renderCard(cardData, cardsList)
     })
+    .catch((error) => {
+      console.log(`Ошибка добавления информации о новой карточке. Ошибка ${error}`);
+    })
     .finally(() => {
       renderLoading(false, submitButtonAddCard, 'Создать');
       evt.target.reset();

@@ -32,6 +32,9 @@ const handleUserDataFormSubmit = (evt) => {
   userJobElement.textContent = userData.about;
 
   updateUserData(userData)
+    .catch((error) => {
+      console.log(`Ошибка обновления информации о пользователе. Ошибка ${error}`);
+    })
     .finally(() => {
       renderLoading(false, submitButtonEditProfile, 'Сохранить');
     }
