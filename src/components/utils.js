@@ -1,6 +1,6 @@
-const renderLoading = (isLoading, button, text) => {
+const renderLoading = (isLoading, button, loadingText, text) => {
   if (isLoading) {
-    button.textContent = 'Сохранение...';
+    button.textContent = loadingText;
   } else {
     button.textContent = text;
   }

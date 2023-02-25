@@ -21,26 +21,26 @@ const submitButtonEditProfile = userDataForm.querySelector('.form__submit');
 
 const handleUserDataFormSubmit = (evt) => {
   evt.preventDefault();
-  renderLoading(true, submitButtonEditProfile, 'Сохранить');
+  renderLoading(true, submitButtonEditProfile,'Сохранение...', 'Сохранить');
 
   const userData = {};
 
   userData.name = nameInput.value;
   userData.about = jobInput.value;
 
-  userNameElement.textContent = userData.name;
-  userJobElement.textContent = userData.about;
-
   updateUserData(userData)
+    .then(() => {
+      userNameElement.textContent = userData.name;
+      userJobElement.textContent = userData.about;
+      closePopup(popupEditProfile);
+    })
     .catch((error) => {
       console.log(`Ошибка обновления информации о пользователе. Ошибка ${error}`);
     })
     .finally(() => {
-      renderLoading(false, submitButtonEditProfile, 'Сохранить');
+      renderLoading(false, submitButtonEditProfile,'Сохранение...', 'Сохранить');
     }
   );
-
-  closePopup(popupEditProfile);
 }
 
 const handleOpenUserDataForm = () => {

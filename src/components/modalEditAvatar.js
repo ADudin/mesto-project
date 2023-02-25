@@ -19,24 +19,25 @@ const submitButtonEditAvatar = userAvatarForm.querySelector('.form__submit');
 
 const handleUserAvatarFormSubmit = (evt) => {
   evt.preventDefault();
-  renderLoading(true, submitButtonEditAvatar, 'Сохранить');
+  renderLoading(true, submitButtonEditAvatar,'Сохранение...', 'Сохранить');
   
   const userData = {};
 
   userData.avatar = avatarInput.value;
-  userAvatarElement.src = userData.avatar;
-  userAvatarElement.alt = 'Изображение аватара пользователя';
 
   updateUserAvatar(userData)
+    .then(() => {
+      userAvatarElement.src = userData.avatar;
+      userAvatarElement.alt = 'Изображение аватара пользователя';
+      closePopup(popupEditUserAvatar);
+    })
     .catch((error) => {
       console.log(`Ошибка обновления аватара пользователя. Ошибка ${error}`);
     })
     .finally(() => {
-      renderLoading(false, submitButtonEditAvatar, 'Сохранить');
+      renderLoading(false, submitButtonEditAvatar, 'Сохранение...', 'Сохранить');
     }
   );
-
-  closePopup(popupEditUserAvatar);
 }
 
 const handleOpenUserAvatarForm = () => {

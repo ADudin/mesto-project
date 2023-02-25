@@ -28,12 +28,13 @@ const updateIsCardLikedElement = (cardData, userId, element) => {
   }
 }
 
-const handleLikeClick = (clickElement, cardData, likesCountElement) => {
-  const isLiked = clickElement.classList.contains('card__like-button_active');
+const handleLikeClick = (likeElement, cardData, likesCountElement) => {
+  const isLiked = likeElement.classList.contains('card__like-button_active');
   
   if (isLiked) {
     deleteLike(cardData)
       .then((data) => {
+        likeElement.classList.toggle('card__like-button_active');
         updateLikesCountElement(likesCountElement, data.likes.length);
       })
       .catch((error) => {
@@ -43,6 +44,7 @@ const handleLikeClick = (clickElement, cardData, likesCountElement) => {
   } else {
     setLike(cardData)
       .then((data) => {
+        likeElement.classList.toggle('card__like-button_active');
         updateLikesCountElement(likesCountElement, data.likes.length);
       })
       .catch((error) => {
@@ -75,7 +77,6 @@ const createNewCard = (cardData) => {
 
   cardLikeButton.addEventListener('click', (evt) => {
     handleLikeClick(evt.target, cardData, cardLikeCount);
-    evt.target.classList.toggle('card__like-button_active');
   });
 
   cardRemoveButton.addEventListener('click', () => {

@@ -14,7 +14,7 @@ const submitButtonAddCard = newCardForm.querySelector('.form__submit');
 
 const handleNewCardFormSubmit = (evt) => {
   evt.preventDefault();
-  renderLoading(true, submitButtonAddCard, 'Создать');
+  renderLoading(true, submitButtonAddCard, 'Сохранение...', 'Создать');
   
   const cardData = {
     name: newCardNameInput.value,
@@ -23,15 +23,15 @@ const handleNewCardFormSubmit = (evt) => {
   
   uploadNewCard(cardData)
     .then((cardData) => {
-      renderCard(cardData, cardsList)
+      renderCard(cardData, cardsList);
+      evt.target.reset();
+      closePopup(popupAddCard);
     })
     .catch((error) => {
       console.log(`Ошибка добавления информации о новой карточке. Ошибка ${error}`);
     })
     .finally(() => {
-      renderLoading(false, submitButtonAddCard, 'Создать');
-      evt.target.reset();
-      closePopup(popupAddCard);
+      renderLoading(false, submitButtonAddCard, 'Сохранение...', 'Создать');
     }
   );
 }
