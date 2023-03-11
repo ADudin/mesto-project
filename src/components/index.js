@@ -74,3 +74,4 @@ Promise.all([getUserData(), getCards()])
     console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
   }
 );
+//test
