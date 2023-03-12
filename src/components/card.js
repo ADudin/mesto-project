@@ -1,7 +1,15 @@
-import { handleImagePopupData } from './modalImage.js';
+import { 
+  //handleImagePopupData, 
+  PopupWithImage 
+} from './modalImage.js';
+
 import { profile } from './profile.js';
 import { openPopup } from './modal.js';
-import { popupRemoveCard } from './modalRemoveCard.js';
+
+import { 
+  popupRemoveCard, 
+  //PopupDeleteCard 
+} from './modalRemoveCard.js';
 
 import { 
   setLike,
@@ -54,7 +62,7 @@ const handleLikeClick = (likeElement, cardData, likesCountElement) => {
   }
 }
 
-const createNewCard = (cardData) => {
+const createNewCard = (cardData, api) => {
   const card = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = card.querySelector('.card__image');
   const cardLikeButton = card.querySelector('.card__like-button');
@@ -82,17 +90,24 @@ const createNewCard = (cardData) => {
   cardRemoveButton.addEventListener('click', () => {
     openPopup(popupRemoveCard);
     popupRemoveCard.setAttribute('data-id', cardData._id);
+    //const popupDeleteCard = new PopupDeleteCard('.popup_type_remove');
+    //popupDeleteCard.open(cardData._id, api);
   });
 
+  // cardImage.addEventListener('click', () => {
+  //   handleImagePopupData(cardData);
+  // });
+
   cardImage.addEventListener('click', () => {
-    handleImagePopupData(cardData);
+    const popupWithImage = new PopupWithImage('.popup_type_image');
+    popupWithImage.open(cardData.link, cardData.name);
   });
 
   return card;
 }
 
-const renderCard = (cardData, container) => {
-  const newCard = createNewCard(cardData);
+const renderCard = (cardData, container, api) => {
+  const newCard = createNewCard(cardData, api);
   container.prepend(newCard);
 }
 

@@ -1,4 +1,8 @@
-import { closePopup } from './modal.js';
+import { 
+  closePopup, 
+  //Popup 
+} from './modal.js';
+
 import { deleteCard } from './api';
 import { renderLoading } from './utils.js';
 
@@ -28,7 +32,46 @@ const handleCardRemove = () => {
 
 buttonConfirm.addEventListener('click', handleCardRemove);
 
+// class PopupDeleteCard extends Popup {
+//   constructor(selector) {
+//     super(selector);
+//     this._buttonConfirm = this._popup.querySelector('.popup__button');
+//   }
+
+//   _handleRemoveCard(cardId, api) {
+//     const cardData = {};
+
+//     cardData._id = cardId;
+//     const cardToDelete = document.querySelector(`.card[data-id='${cardData._id}']`);
+    
+//     renderLoading(true, this._buttonConfirm, 'Удаление...', 'Да');
+    
+//     api.deleteCard(cardData)
+//       .then(() => {
+//         cardToDelete.remove();
+//         this.close();
+//       })
+//       .catch((error) => {
+//         console.log(`Ошибка удаления карточки. Ошибка ${error}`);
+//       })
+//       .finally(() => {
+//         renderLoading(false, buttonConfirm, 'Удаление...', 'Да');
+//       }
+//     );
+//   }
+
+//   open(cardId, api) {
+//     console.log(api);
+//     super.open();
+
+//     this._buttonConfirm.addEventListener('click', () => {
+//       this._handleRemoveCard(cardId, api);
+//     });
+//   }
+// }
+
 export {
+  //PopupDeleteCard,
   popupRemoveCard,
   buttonConfirm,
   handleCardRemove

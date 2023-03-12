@@ -51,9 +51,9 @@ buttonAddCard.addEventListener('click', () => {
   openPopup(popupAddCard);
 });
 
-popupCloseButtons.forEach((item) => {
-  item.addEventListener('click', handleClosePopup);
-});
+// popupCloseButtons.forEach((item) => {
+//   item.addEventListener('click', handleClosePopup);
+// });
 
 userDataForm.addEventListener('submit', handleUserDataFormSubmit);
 userAvatarForm.addEventListener('submit', handleUserAvatarFormSubmit);
@@ -65,9 +65,9 @@ enableValidation(validationParams);
 const api = new Api ({
   baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-21',
   headers: {
-       authorization: 'e22a7236-eb1c-4145-a157-f86fa0ccbc4e',
-      'Content-Type': 'application/json'
- }
+    authorization: 'e22a7236-eb1c-4145-a157-f86fa0ccbc4e',
+    'Content-Type': 'application/json'
+  }
 })
 
 Promise.all([api.getUserData(), api.getInitialCards()])
@@ -75,10 +75,10 @@ Promise.all([api.getUserData(), api.getInitialCards()])
       renderUserInfo(userData);
       setUserData(userData);
       cards.forEach((card) => {
-        renderCard(card, cardsList);
+        renderCard(card, cardsList, api);
       });
     })
     .catch((error) => {
-          console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
-        }
-    );
+      console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
+    }
+);

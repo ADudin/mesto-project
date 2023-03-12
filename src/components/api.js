@@ -6,7 +6,8 @@ class Api {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
   }
-  _checkResponse (res){
+
+  _checkResponse (res){ // приватный метод проверки статуса ответа от сервера
     if (res.ok) {
       return res.json();
     }
@@ -14,19 +15,21 @@ class Api {
     return Promise.reject(`Ошибка ${res.status}`);
   }
 
-  getInitialCards() {
+  getInitialCards() { // получение карточек от сервера
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     })
     .then(this._checkResponse);
   }
-   getUserData () {
+
+  getUserData () { // получение информации о пользователе
      return fetch(`${this._baseUrl}/users/me`, {
        headers: this._headers,
      })
-     .then(this._checkResponse);
-   }
-  updateUserData (userData) {
+    .then(this._checkResponse);
+  }
+
+  updateUserData (userData) { // обновление информации о пользователе
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -36,9 +39,10 @@ class Api {
         about: userData.about
       })
     })
-     .then(this._checkResponse);
+    .then(this._checkResponse);
   }
-  uploadNewCard = (cardData) => {
+
+  uploadNewCard = (cardData) => { // добавление новой карточки
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers:  this._headers,
@@ -49,29 +53,32 @@ class Api {
     })
     .then(this._checkResponse);
   }
-  deleteCard (cardData) {
-    return fetch(`${this._baseUrl}cards/${cardData._id}`, {
+
+  deleteCard(cardData) { // удаление карточки
+    return fetch(`${this._baseUrl}/cards/${cardData._id}`, {
       method: 'DELETE',
       headers: this._headers,
     })
-     .then(this._checkResponse);
+    .then(this._checkResponse);
   }
-  setLike(cardData) {
+
+  setLike(cardData) { // добавление лайка
     return fetch(`${this._baseUrl}/cards/likes/${cardData._id}`, {
       method: 'PUT',
       headers: this._headers,
     })
-     .then(checkResponse);
+    .then(checkResponse);
   }
-  deleteLike (cardData) {
+
+  deleteLike (cardData) { // удаление лайка
     return fetch(`${this._baseUrl}/cards/likes/${cardData._id}`, {
       method: 'DELETE',
       headers: this._headers,
     })
-     .then(checkResponse);
+    .then(checkResponse);
   }
 
-  updateUserAvatar = (userData) => {
+  updateUserAvatar = (userData) => { // обноваление аватара пользователя
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
@@ -81,7 +88,6 @@ class Api {
     })
     .then(this._checkResponse);
   }
-
 }
 
 
@@ -91,23 +97,23 @@ const config = {
   serverUrl: 'https://mesto.nomoreparties.co'
 }
 
-const getCards = () => {
-  return fetch(`${config.serverUrl}/v1/${config.cohortId}/cards`, {
-    headers: {
-      authorization: config.token
-    }
-  })
-  .then(checkResponse);
-}
+// const getCards = () => {
+//   return fetch(`${config.serverUrl}/v1/${config.cohortId}/cards`, {
+//     headers: {
+//       authorization: config.token
+//     }
+//   })
+//   .then(checkResponse);
+// }
 
-const getUserData = () => {
-  return fetch(`${config.serverUrl}/v1/${config.cohortId}/users/me`, {
-    headers: {
-      authorization: config.token
-    }
-  })
-  .then(checkResponse);
-}
+// const getUserData = () => {
+//   return fetch(`${config.serverUrl}/v1/${config.cohortId}/users/me`, {
+//     headers: {
+//       authorization: config.token
+//     }
+//   })
+//   .then(checkResponse);
+// }
 
 const updateUserData = (userData) => {
   return fetch(`${config.serverUrl}/v1/${config.cohortId}/users/me`, {
@@ -185,8 +191,8 @@ const updateUserAvatar = (userData) => {
 
 export {
   Api,
-  getCards,
-  getUserData,
+  //getCards,
+  //getUserData,
   updateUserData,
   updateUserAvatar,
   uploadNewCard,
