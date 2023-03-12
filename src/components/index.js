@@ -5,9 +5,8 @@ import {
   renderUserInfo
 } from './profile.js';
 
-import { 
-  getCards,
-  getUserData
+import {
+  Api
 } from './api.js';
 
 import {
@@ -62,16 +61,24 @@ newCardForm.addEventListener('submit', handleNewCardFormSubmit);
 
 enableValidation(validationParams);
 
-Promise.all([getUserData(), getCards()])
-  .then(([userData, cards]) => {
-    renderUserInfo(userData);
-    setUserData(userData);
-    cards.forEach((card) => {
-      renderCard(card, cardsList);
-    });
-  })
-  .catch((error) => {
-    console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
-  }
-);
-//test2
+
+const api = new Api ({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-21',
+  headers: {
+       authorization: 'e22a7236-eb1c-4145-a157-f86fa0ccbc4e',
+      'Content-Type': 'application/json'
+ }
+})
+
+Promise.all([api.getUserData(), api.getInitialCards()])
+    .then(([userData, cards]) => {
+      renderUserInfo(userData);
+      setUserData(userData);
+      cards.forEach((card) => {
+        renderCard(card, cardsList);
+      });
+    })
+    .catch((error) => {
+          console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
+        }
+    );

@@ -1,5 +1,90 @@
 import { checkResponse } from './utils.js';
 
+
+class Api {
+  constructor(options) {
+    this._baseUrl = options.baseUrl;
+    this._headers = options.headers;
+  }
+  _checkResponse (res){
+    if (res.ok) {
+      return res.json();
+    }
+
+    return Promise.reject(`Ошибка ${res.status}`);
+  }
+
+  getInitialCards() {
+    return fetch(`${this._baseUrl}/cards`, {
+      headers: this._headers,
+    })
+    .then(this._checkResponse);
+  }
+   getUserData () {
+     return fetch(`${this._baseUrl}/users/me`, {
+       headers: this._headers,
+     })
+     .then(this._checkResponse);
+   }
+  updateUserData (userData) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: 'PATCH',
+      headers: this._headers,
+
+      body: JSON.stringify({
+        name: userData.name,
+        about: userData.about
+      })
+    })
+     .then(this._checkResponse);
+  }
+  uploadNewCard = (cardData) => {
+    return fetch(`${this._baseUrl}/cards`, {
+      method: 'POST',
+      headers:  this._headers,
+      body: JSON.stringify({
+        name: cardData.name,
+        link: cardData.link
+      })
+    })
+    .then(this._checkResponse);
+  }
+  deleteCard (cardData) {
+    return fetch(`${this._baseUrl}cards/${cardData._id}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+     .then(this._checkResponse);
+  }
+  setLike(cardData) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardData._id}`, {
+      method: 'PUT',
+      headers: this._headers,
+    })
+     .then(checkResponse);
+  }
+  deleteLike (cardData) {
+    return fetch(`${this._baseUrl}/cards/likes/${cardData._id}`, {
+      method: 'DELETE',
+      headers: this._headers,
+    })
+     .then(checkResponse);
+  }
+
+  updateUserAvatar = (userData) => {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: 'PATCH',
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar: userData.avatar
+      })
+    })
+    .then(this._checkResponse);
+  }
+
+}
+
+
 const config = {
   cohortId: 'plus-cohort-21',
   token: 'e22a7236-eb1c-4145-a157-f86fa0ccbc4e',
@@ -99,6 +184,7 @@ const updateUserAvatar = (userData) => {
 }
 
 export {
+  Api,
   getCards,
   getUserData,
   updateUserData,
