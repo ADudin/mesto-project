@@ -29,9 +29,7 @@ import {
   handleOpenUserAvatarForm
 } from './modalEditAvatar.js';
 
-import {renderCard,
-Card
-} from './card.js';
+import {renderCard} from './card.js';
 
 import { 
   buttonAddCard,
@@ -45,8 +43,6 @@ import {
   validationParams,
   enableValidation
 } from './validate.js';
-
-import Section from "./section";
 
 profileEditButton.addEventListener('click', handleOpenUserDataForm);
 editUserAvatarButton.addEventListener('click', handleOpenUserAvatarForm);
@@ -74,8 +70,6 @@ const api = new Api ({
   }
 })
 
-
-
 Promise.all([api.getUserData(), api.getInitialCards()])
     .then(([userData, cards]) => {
       renderUserInfo(userData);
@@ -83,7 +77,6 @@ Promise.all([api.getUserData(), api.getInitialCards()])
       cards.forEach((card) => {
         renderCard(card, cardsList, api);
       });
-
     })
     .catch((error) => {
       console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
@@ -100,4 +93,3 @@ Promise.all([api.getUserData(), api.getInitialCards()])
 //   }
 // }, cardsList)
 // section.renderCards()
-
