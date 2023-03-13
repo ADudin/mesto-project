@@ -97,3 +97,19 @@ export {
   validationParams, 
   enableValidation
 };
+//================================================================================================
+// class FormValidator {
+//  constructor({setting, formElement}, validationElement) {
+//    this._setting = setting;
+//    this._formElement = formElement;
+//    this._validationElement = document.querySelector(validationElement);
+//  }
+//
+//   _showInputError (validationParams, formElement, inputElement, errorMessage)  {
+//     const errorElement = formElement.querySelector(validationParams.getErrorInputSelector(inputElement.id));
+//
+//     inputElement.classList.add(validationParams.inputErrorClass);
+//     errorElement.textContent = errorMessage;
+//     errorElement.classList.add(validationParams.errorClass);
+//   }
+// }
