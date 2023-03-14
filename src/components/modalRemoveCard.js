@@ -1,6 +1,6 @@
 import { 
   closePopup, 
-  //Popup 
+  Popup 
 } from './modal.js';
 
 import { deleteCard } from './api';
@@ -9,7 +9,7 @@ import { renderLoading } from './utils.js';
 const popupRemoveCard = document.querySelector('.popup_type_remove');
 const buttonConfirm = popupRemoveCard.querySelector('.popup__button');
 
-const handleCardRemove = () => {
+const handleCardRemove = () => { // удалить после перевода попапа с созданием карточки в класс
   const cardData = {};
   cardData._id = popupRemoveCard.getAttribute('data-id');
   const cardToDelete = document.querySelector(`.card[data-id='${cardData._id}']`);
@@ -32,47 +32,47 @@ const handleCardRemove = () => {
 
 buttonConfirm.addEventListener('click', handleCardRemove);
 
-// class PopupDeleteCard extends Popup {
-//   constructor(selector) {
-//     super(selector);
-//     this._buttonConfirm = this._popup.querySelector('.popup__button');
-//   }
+class PopupDeleteCard extends Popup {
+  constructor(selector, cardId) {
+    super(selector);
+    this._buttonConfirm = document.querySelector('.popup__button');
+    this._cardId = cardId;
+  }
 
-//   _handleRemoveCard(cardId, api) {
-//     const cardData = {};
-
-//     cardData._id = cardId;
-//     const cardToDelete = document.querySelector(`.card[data-id='${cardData._id}']`);
+  _handleRemoveCard(api) {
+    const cardData = {};
+    cardData._id = this._cardId;
     
-//     renderLoading(true, this._buttonConfirm, 'Удаление...', 'Да');
+    const cardToDelete = document.querySelector(`.card[data-id='${cardData._id}']`);
     
-//     api.deleteCard(cardData)
-//       .then(() => {
-//         cardToDelete.remove();
-//         this.close();
-//       })
-//       .catch((error) => {
-//         console.log(`Ошибка удаления карточки. Ошибка ${error}`);
-//       })
-//       .finally(() => {
-//         renderLoading(false, buttonConfirm, 'Удаление...', 'Да');
-//       }
-//     );
-//   }
+    renderLoading(true, this._buttonConfirm, 'Удаление...', 'Да');
+    
+    api.deleteCard(cardData)
+      .then(() => {
+        cardToDelete.remove();
+        this.close();
+      })
+      .catch((error) => {
+        console.log(`Ошибка удаления карточки. Ошибка ${error}`);
+      })
+      .finally(() => {
+        renderLoading(false, buttonConfirm, 'Удаление...', 'Да');
+      }
+    );
+  }
 
-//   open(cardId, api) {
-//     console.log(api);
-//     super.open();
+  open(api) {
+    this._buttonConfirm.addEventListener('click', () => {
+      this._handleRemoveCard(api);
+    });
 
-//     this._buttonConfirm.addEventListener('click', () => {
-//       this._handleRemoveCard(cardId, api);
-//     });
-//   }
-// }
+    super.open();
+  }
+}
 
 export {
-  //PopupDeleteCard,
+  PopupDeleteCard,
   popupRemoveCard,
-  buttonConfirm,
-  handleCardRemove
+  //buttonConfirm,
+  //handleCardRemove
 }

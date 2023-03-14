@@ -10,9 +10,9 @@ import {
 } from './api.js';
 
 import {
-  popupCloseButtons,
+  //popupCloseButtons,
   openPopup,
-  handleClosePopup
+  //handleClosePopup
 } from './modal.js';
 
 import { 
@@ -29,6 +29,8 @@ import {
   handleOpenUserAvatarForm
 } from './modalEditAvatar.js';
 
+import { PopupWithImage } from './modalImage.js';
+
 import {
  // renderCard,
   Card} from './card.js';
@@ -37,9 +39,11 @@ import {
   buttonAddCard,
   popupAddCard,
   newCardForm,
-  cardsList,
+  //cardsList,
   handleNewCardFormSubmit,
 } from './modalAddCard.js';
+
+import { PopupDeleteCard } from './modalRemoveCard.js';
 
 import {
   validationParams,
@@ -57,20 +61,17 @@ buttonAddCard.addEventListener('click', () => {
   openPopup(popupAddCard);
 });
 
-// popupCloseButtons.forEach((item) => {
-//   item.addEventListener('click', handleClosePopup);
-// });
-
 userDataForm.addEventListener('submit', handleUserDataFormSubmit);
 userAvatarForm.addEventListener('submit', handleUserAvatarFormSubmit);
 newCardForm.addEventListener('submit', handleNewCardFormSubmit);
 
 //enableValidation(validationParams);
 const formList = Array.from(document.querySelectorAll(validationParams.formSelector));
+
 formList.forEach((formElement) => {
   const formValide = new FormValidator(validationParams,formElement);
   formValide.enableValidation()
-    });
+});
 
 
 const api = new Api ({
@@ -81,23 +82,88 @@ const api = new Api ({
   }
 })
 
+// Promise.all([api.getUserData(), api.getInitialCards()])
+//     .then(([userData, cards]) => {
+//       renderUserInfo(userData);
+//       setUserData(userData);
+//       const section = new Section({
+//        items: cards,
+//         renderer: (item) => {
+//           const card = new Card(
+//             item, 
+//             '#card-template'
+//           );
+//          //console.log(card)
+//          const cardElement = card.generateCard();
+//          section.setCard(cardElement);
+//        }
+//     }, '.cards__list')
+//      section.renderCards()
+//    })
+//     .catch((error) => {
+//       console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
+//     }
+// );
+
 Promise.all([api.getUserData(), api.getInitialCards()])
     .then(([userData, cards]) => {
       renderUserInfo(userData);
       setUserData(userData);
       const section = new Section({
-       items: cards,
+        items: cards,
         renderer: (item) => {
-         const card = new Card(item, '#card-template');
-         //console.log(card)
-         const cardElement = card.generateCard();
-         section.setCard(cardElement);
-       }
+          const card = new Card({ // деструктуризация нужна, чтобы передать колбэки
+            id: item._id, // деструктуризация item
+            name: item.name,
+            link: item.link,
+            likes: item.likes,
+            owner: item.owner,
+            handleRemoveCard: (cardId) => { //добавляем колбэк удаления карточки
+              const popupRemoveCard = new PopupDeleteCard('.popup_type_remove', cardId);
+              popupRemoveCard.open(api);
+            },
+            handleLikeClick: (likeElement, id, likesCountElement) => { //добавляем колбэк клика по лайку
+              const isLiked = likeElement.classList.contains('card__like-button_active');
+              const cardData = {};
+              cardData._id = id;
+
+              if (isLiked) {
+                api.deleteLike(cardData)
+                  .then((data) => {
+                    likeElement.classList.toggle('card__like-button_active');
+                    card.updateLikesCountElement(likesCountElement, data.likes.length);
+                  })
+                  .catch((error) => {
+                    console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
+                  });
+              } else {
+                api.setLike(cardData)
+                  .then((data) => {
+                    likeElement.classList.toggle('card__like-button_active');
+                    card.updateLikesCountElement(likesCountElement, data.likes.length);
+                  })
+                  .catch((error) => {
+                    console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
+                  }
+                );
+              }
+            },
+            handleOpenImagePopup: (link, name) => { //добавляем колбэк открытия модального окна с изображением
+              const popupWithImage = new PopupWithImage('.popup_type_image');
+              popupWithImage.open(link, name);
+            }
+          },'#card-template'
+        );
+
+        const cardElement = card.generateCard();
+        section.setCard(cardElement);
+      }
     }, '.cards__list')
-     section.renderCards()
-   })
-    .catch((error) => {
-      console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
-    }
+
+    section.renderCards()
+  })
+  .catch((error) => {
+    console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
+  }
 );
 
