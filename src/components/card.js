@@ -114,7 +114,7 @@ import {
 // класс card
 //===============================================================================================
 //
-class Card {
+ class Card {
   constructor(cardData, templateSelector) {
     this._cardData = cardData;
     this._templateSelector = templateSelector;
@@ -134,7 +134,7 @@ class Card {
   // счетчик лайков
   _updateLikesCountElement(element, value) {
     if (value === 0) {
-      element.textContent = '';
+      element.textContent = '0'; //--------------------------
     } else {
       element.textContent = value;
     }
@@ -218,12 +218,13 @@ class Card {
 
     return this._card;
   }
-};
+}
 
 //======================================================================================================
 
 const renderCard = (cardData, container, api) => {
   const newCard = new Card(cardData, '#card-template');
+  console.log(newCard)
   container.prepend(newCard.generateCard());
 }
 

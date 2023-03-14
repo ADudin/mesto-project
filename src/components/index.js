@@ -29,7 +29,9 @@ import {
   handleOpenUserAvatarForm
 } from './modalEditAvatar.js';
 
-import {renderCard} from './card.js';
+import {
+ // renderCard,
+  Card} from './card.js';
 
 import { 
   buttonAddCard,
@@ -41,8 +43,12 @@ import {
 
 import {
   validationParams,
-  enableValidation
+  //enableValidation,
+  FormValidator
 } from './validate.js';
+
+import Section from "./section";
+
 
 profileEditButton.addEventListener('click', handleOpenUserDataForm);
 editUserAvatarButton.addEventListener('click', handleOpenUserAvatarForm);
@@ -59,7 +65,12 @@ userDataForm.addEventListener('submit', handleUserDataFormSubmit);
 userAvatarForm.addEventListener('submit', handleUserAvatarFormSubmit);
 newCardForm.addEventListener('submit', handleNewCardFormSubmit);
 
-enableValidation(validationParams);
+//enableValidation(validationParams);
+const formList = Array.from(document.querySelectorAll(validationParams.formSelector));
+formList.forEach((formElement) => {
+  const formValide = new FormValidator(validationParams,formElement);
+  formValide.enableValidation()
+    });
 
 
 const api = new Api ({
@@ -74,22 +85,19 @@ Promise.all([api.getUserData(), api.getInitialCards()])
     .then(([userData, cards]) => {
       renderUserInfo(userData);
       setUserData(userData);
-      cards.forEach((card) => {
-        renderCard(card, cardsList, api);
-      });
-    })
+      const section = new Section({
+       items: cards,
+        renderer: (item) => {
+         const card = new Card(item, '#card-template');
+         //console.log(card)
+         const cardElement = card.generateCard();
+         section.setCard(cardElement);
+       }
+    }, '.cards__list')
+     section.renderCards()
+   })
     .catch((error) => {
       console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
     }
 );
 
-// const section = new Section({
-//   items: api.getInitialCards(),
-//   renderer: (item) => {
-//     const card = new Card(item, '#card-template');
-//     const cardElement = card.generateCard();
-//      section.setCard(cardElement);
-//
-//   }
-// }, cardsList)
-// section.renderCards()

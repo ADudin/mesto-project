@@ -3,7 +3,6 @@ export default class Section {
     //renderer - функция отвечающая за отрисовку данных
     // selectorContainer - контейнер куда добавляются все отрисованные карточки
     constructor({items, renderer}, selectorContainer)  {
-        //console.log(items)
         this._arrayCards = items;
         this._renderer = renderer;
         this._container = document.querySelector(selectorContainer);
