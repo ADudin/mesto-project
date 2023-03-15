@@ -6,10 +6,11 @@ import {
 } from './profile.js';
 
 import {
-  Api
+  Api,
 } from './api.js';
 
 import {
+  closePopup,
   //popupCloseButtons,
   openPopup,
   //handleClosePopup
@@ -32,15 +33,18 @@ import {
 import { PopupWithImage } from './modalImage.js';
 
 import {
- // renderCard,
-  Card} from './card.js';
+  // renderCard,
+  Card, renderCard,
+} from './card.js';
 
-import { 
+import {
   buttonAddCard,
   popupAddCard,
   newCardForm,
   //cardsList,
   handleNewCardFormSubmit,
+  cardsList,
+  submitButtonAddCard
 } from './modalAddCard.js';
 
 import { PopupDeleteCard } from './modalRemoveCard.js';
@@ -52,6 +56,8 @@ import {
 } from './validate.js';
 
 import Section from "./section";
+import PopupWithForm from "./PopupWithForm";
+import {renderLoading} from "./utils";
 
 
 profileEditButton.addEventListener('click', handleOpenUserDataForm);
@@ -82,6 +88,16 @@ const api = new Api ({
   }
 })
 
+// const popupForm = new PopupWithForm({ selector: '.popup_type_add-new-card', callbackFormSubmit: (cardData) => {
+// console.log(cardData)
+//   api.uploadNewCard(cardData.name, cardData.link)
+//       .then( res => {
+//         console.log(res)
+//       })
+// }})
+// console.log(popupForm)
+
+
 // Promise.all([api.getUserData(), api.getInitialCards()])
 //     .then(([userData, cards]) => {
 //       renderUserInfo(userData);
@@ -90,7 +106,7 @@ const api = new Api ({
 //        items: cards,
 //         renderer: (item) => {
 //           const card = new Card(
-//             item, 
+//             item,
 //             '#card-template'
 //           );
 //          //console.log(card)

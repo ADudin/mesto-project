@@ -15,12 +15,12 @@ const submitButtonAddCard = newCardForm.querySelector('.form__submit');
 const handleNewCardFormSubmit = (evt) => {
   evt.preventDefault();
   renderLoading(true, submitButtonAddCard, 'Сохранение...', 'Создать');
-  
+
   const cardData = {
     name: newCardNameInput.value,
     link: newCardImageLinkInput.value,
   }
-  
+
   uploadNewCard(cardData)
     .then((cardData) => {
       renderCard(cardData, cardsList);
@@ -41,5 +41,6 @@ export {
   popupAddCard, 
   newCardForm,
   cardsList,
-  handleNewCardFormSubmit
+  handleNewCardFormSubmit,
+  submitButtonAddCard
 };
