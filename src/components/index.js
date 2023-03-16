@@ -88,60 +88,57 @@ export const api = new Api ({
   }
 });
 
-
-
-
-function handleRemoveCard ( cardId){
+// колбэк удаления карточки
+const handleRemoveCard = (cardId) => {
   const cardData = {};
   cardData._id = cardId
   const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
   api.deleteCard(cardData)
-      .then(() => {
-        cardToDelete.remove();
-      })
-      .catch((error) => {
-            console.log(`Ошибка удаления карточки. Ошибка ${error}`);
-          }
-      );
+    .then(() => {
+      cardToDelete.remove();
+    })
+    .catch((error) => {
+      console.log(`Ошибка удаления карточки. Ошибка ${error}`);
+    }
+  );
 }
 
+// счетчик лайков
+const updateLikesCountElement = (element, value) => {
+  if (value === 0) {
+    element.textContent = '';
+  } else {
+    element.textContent = value;
+  }
+}
 
-function handleLikeClick (likeElement, id, likesCountElement)  { //добавляем колбэк клика по лайку
-
+// колбэк клика по лайку
+const handleLikeClick = (likeElement, id, likesCountElement) =>  { 
   const isLiked = likeElement.classList.contains('card__like-button_active');
   const cardData = {};
-   cardData._id = id;
+  
+  cardData._id = id;
 
-if (isLiked) {
-  api.deleteLike(cardData)
+  if (isLiked) {
+    api.deleteLike(cardData)
       .then((data) => {
-        console.log(data)
-
         likeElement.classList.toggle('card__like-button_active');
-
-        data.updateLikesCountElement(likesCountElement, data.likes.length);
-
+        updateLikesCountElement(likesCountElement, data.likes.length);
       })
-      // .catch((error) => {
-      //   console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
-      // });
-} else {
-  api.setLike(cardData)
+      .catch((error) => {
+        console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
+      });
+  } else {
+    api.setLike(cardData)
       .then((data) => {
-       // console.log(cardData)
-        console.log(data)
-       // console.log(data.likes.length)
-
-
         likeElement.classList.toggle('card__like-button_active');
-
-        data.updateLikesCountElement(likesCountElement, data.likes.length);
+        updateLikesCountElement(likesCountElement, data.likes.length);
       })
-      // .catch((error) => {
-      //       console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
-      //     }
-      // );
-}
+      .catch((error) => {
+        console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
+      }
+    );
+  }
 }
 
 
@@ -160,9 +157,6 @@ const popupAddCard = new PopupWithForm({
           handleRemoveCard: handleRemoveCard,
           handleLikeClick: handleLikeClick,
           // handleRemoveCard: (cardId) => { //добавляем колбэк удаления карточки
-          //   // const popupRemoveCard = new PopupDeleteCard('.popup_type_remove', cardId);
-          //   // popupRemoveCard.setEventListeners();
-          //   // popupRemoveCard.open(api);
           //   const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
           //   api.deleteCard(newCard)
           //       .then(() => {
@@ -327,4 +321,3 @@ Promise.all([api.getUserData(), api.getInitialCards()])
     console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
   }
 );
-
