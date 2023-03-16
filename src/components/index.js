@@ -34,15 +34,15 @@ import { PopupWithImage } from './modalImage.js';
 
 import {
   // renderCard,
-  Card, renderCard,
+  Card
 } from './card.js';
 
 import {
   buttonAddCard,
-  popupAddCard,
+  //popupAddCard,
   newCardForm,
   //cardsList,
-  handleNewCardFormSubmit,
+  //handleNewCardFormSubmit,
   cardsList,
   submitButtonAddCard
 } from './modalAddCard.js';
@@ -63,13 +63,13 @@ import {renderLoading} from "./utils";
 profileEditButton.addEventListener('click', handleOpenUserDataForm);
 editUserAvatarButton.addEventListener('click', handleOpenUserAvatarForm);
 
-buttonAddCard.addEventListener('click', () => {
-  openPopup(popupAddCard);
-});
+// buttonAddCard.addEventListener('click', () => {
+//   openPopup(popupAddCard);
+// });
 
 userDataForm.addEventListener('submit', handleUserDataFormSubmit);
 userAvatarForm.addEventListener('submit', handleUserAvatarFormSubmit);
-newCardForm.addEventListener('submit', handleNewCardFormSubmit);
+//newCardForm.addEventListener('submit', handleNewCardFormSubmit);
 
 //enableValidation(validationParams);
 const formList = Array.from(document.querySelectorAll(validationParams.formSelector));
@@ -86,16 +86,31 @@ const api = new Api ({
     authorization: 'e22a7236-eb1c-4145-a157-f86fa0ccbc4e',
     'Content-Type': 'application/json'
   }
-})
+});
 
-// const popupForm = new PopupWithForm({ selector: '.popup_type_add-new-card', callbackFormSubmit: (cardData) => {
-// console.log(cardData)
-//   api.uploadNewCard(cardData.name, cardData.link)
-//       .then( res => {
-//         console.log(res)
-//       })
-// }})
-// console.log(popupForm)
+const popupAddCard = new PopupWithForm({ 
+  selector: '.popup_type_add-new-card', 
+  handleFormSubmit: (cardData) => {
+    renderLoading(true, submitButtonAddCard, 'Сохранение...', 'Создать');
+    api.uploadNewCard(cardData)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.log(`Ошибка добавления информации о новой карточке. Ошибка ${error}`);
+      })
+      .finally(() => {
+        renderLoading(false, submitButtonAddCard, 'Сохранение...', 'Создать');
+        popupAddCard.close();
+      }
+    );
+  }
+});
+
+popupAddCard.setEventListeners();
+buttonAddCard.addEventListener('click', () => {
+  popupAddCard.open();
+});
 
 
 // Promise.all([api.getUserData(), api.getInitialCards()])
@@ -135,8 +150,18 @@ Promise.all([api.getUserData(), api.getInitialCards()])
             likes: item.likes,
             owner: item.owner,
             handleRemoveCard: (cardId) => { //добавляем колбэк удаления карточки
-              const popupRemoveCard = new PopupDeleteCard('.popup_type_remove', cardId);
-              popupRemoveCard.open(api);
+              // const popupRemoveCard = new PopupDeleteCard('.popup_type_remove', cardId);
+              // popupRemoveCard.setEventListeners();
+              // popupRemoveCard.open(api);
+              const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
+              api.deleteCard(item)
+                .then(() => {
+                  cardToDelete.remove();
+                })
+                .catch((error) => {
+                  console.log(`Ошибка удаления карточки. Ошибка ${error}`);
+                }
+              );
             },
             handleLikeClick: (likeElement, id, likesCountElement) => { //добавляем колбэк клика по лайку
               const isLiked = likeElement.classList.contains('card__like-button_active');
@@ -166,17 +191,18 @@ Promise.all([api.getUserData(), api.getInitialCards()])
             },
             handleOpenImagePopup: (link, name) => { //добавляем колбэк открытия модального окна с изображением
               const popupWithImage = new PopupWithImage('.popup_type_image');
+              popupWithImage.setEventListeners();
               popupWithImage.open(link, name);
             }
           },'#card-template'
         );
-
+        
         const cardElement = card.generateCard();
         section.setCard(cardElement);
       }
-    }, '.cards__list')
+    }, '.cards__list');
 
-    section.renderCards()
+    section.renderCards();
   })
   .catch((error) => {
     console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);

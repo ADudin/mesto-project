@@ -6,7 +6,7 @@ import {
 import { profile } from './profile.js';
 import { openPopup } from './modal.js';
 
-import { popupRemoveCard } from './modalRemoveCard.js';
+//import { popupRemoveCard } from './modalRemoveCard.js';
 
 import {
   setLike,
