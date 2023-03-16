@@ -12,6 +12,7 @@ import {
   setLike,
   deleteLike
 } from './api.js';
+import {api} from "./index";
 
 // const cardTemplate = document.querySelector('#card-template').content;
 
@@ -180,6 +181,8 @@ const renderCard = (card, container) => {
     this._cardImage.alt = `Фотография ${this._name}`;
 
     this.updateLikesCountElement(this._cardLikeCount, this._likes.length);
+    //console.log(this._cardLikeCount)
+    //console.log( this._likes.length)
 
     if (this._userId !== this._owner._id) {
       this._cardRemoveButton.remove();
@@ -190,6 +193,7 @@ const renderCard = (card, container) => {
     //добавляем обрабочтики событий на кнопки карточки, тут надо будет переделать
 
     this._cardLikeButton.addEventListener('click', (evt) => {
+        //evt.preventDefault()
       this._handleLikeClick(evt.target, this._id, this._cardLikeCount);
     });
 

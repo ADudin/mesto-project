@@ -80,7 +80,7 @@ formList.forEach((formElement) => {
 });
 
 
-const api = new Api ({
+export const api = new Api ({
   baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-21',
   headers: {
     authorization: 'e22a7236-eb1c-4145-a157-f86fa0ccbc4e',
@@ -88,59 +88,117 @@ const api = new Api ({
   }
 });
 
+
+
+
+function handleRemoveCard ( cardId){
+  const cardData = {};
+  cardData._id = cardId
+  const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
+  api.deleteCard(cardData)
+      .then(() => {
+        cardToDelete.remove();
+      })
+      .catch((error) => {
+            console.log(`Ошибка удаления карточки. Ошибка ${error}`);
+          }
+      );
+}
+
+
+function handleLikeClick (likeElement, id, likesCountElement)  { //добавляем колбэк клика по лайку
+
+  const isLiked = likeElement.classList.contains('card__like-button_active');
+  const cardData = {};
+   cardData._id = id;
+
+if (isLiked) {
+  api.deleteLike(cardData)
+      .then((data) => {
+        console.log(data)
+
+        likeElement.classList.toggle('card__like-button_active');
+
+        data.updateLikesCountElement(likesCountElement, data.likes.length);
+
+      })
+      // .catch((error) => {
+      //   console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
+      // });
+} else {
+  api.setLike(cardData)
+      .then((data) => {
+       // console.log(cardData)
+        console.log(data)
+       // console.log(data.likes.length)
+
+
+        likeElement.classList.toggle('card__like-button_active');
+
+        data.updateLikesCountElement(likesCountElement, data.likes.length);
+      })
+      // .catch((error) => {
+      //       console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
+      //     }
+      // );
+}
+}
+
+
 const popupAddCard = new PopupWithForm({ 
   selector: '.popup_type_add-new-card', 
   handleFormSubmit: (cardData) => {
     renderLoading(true, submitButtonAddCard, 'Сохранение...', 'Создать');
     api.uploadNewCard(cardData)
       .then((card) => {
-        console.log(card);
         const newCard = new Card({
           id: card._id,
           name: card.name,
           link: card.link,
           likes: card.likes,
           owner: card.owner,
-          handleRemoveCard: (cardId) => { //добавляем колбэк удаления карточки
-            // const popupRemoveCard = new PopupDeleteCard('.popup_type_remove', cardId);
-            // popupRemoveCard.setEventListeners();
-            // popupRemoveCard.open(api);
-            const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
-            api.deleteCard(item)
-                .then(() => {
-                  cardToDelete.remove();
-                })
-                .catch((error) => {
-                      console.log(`Ошибка удаления карточки. Ошибка ${error}`);
-                    }
-                );
-          },
-          handleLikeClick: (likeElement, id, likesCountElement) => { //добавляем колбэк клика по лайку
-            const isLiked = likeElement.classList.contains('card__like-button_active');
-            const cardData = {};
-            cardData._id = id;
-
-            if (isLiked) {
-              api.deleteLike(cardData)
-                  .then((data) => {
-                    likeElement.classList.toggle('card__like-button_active');
-                    card.updateLikesCountElement(likesCountElement, data.likes.length);
-                  })
-                  .catch((error) => {
-                    console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
-                  });
-            } else {
-              api.setLike(cardData)
-                  .then((data) => {
-                    likeElement.classList.toggle('card__like-button_active');
-                    card.updateLikesCountElement(likesCountElement, data.likes.length);
-                  })
-                  .catch((error) => {
-                        console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
-                      }
-                  );
-            }
-          },
+          handleRemoveCard: handleRemoveCard,
+          handleLikeClick: handleLikeClick,
+          // handleRemoveCard: (cardId) => { //добавляем колбэк удаления карточки
+          //   // const popupRemoveCard = new PopupDeleteCard('.popup_type_remove', cardId);
+          //   // popupRemoveCard.setEventListeners();
+          //   // popupRemoveCard.open(api);
+          //   const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
+          //   api.deleteCard(newCard)
+          //       .then(() => {
+          //         cardToDelete.remove();
+          //       })
+          //       .catch((error) => {
+          //             console.log(`Ошибка удаления карточки. Ошибка ${error}`);
+          //           }
+          //       );
+          // },
+          // handleLikeClick: (likeElement, id, likesCountElement) => { //добавляем колбэк клика по лайку
+          //   const isLiked = likeElement.classList.contains('card__like-button_active');
+          //   const cardData = {};
+          //   cardData._id = id;
+          //
+          //   if (isLiked) {
+          //     api.deleteLike(cardData)
+          //         .then((data) => {
+          //           likeElement.classList.toggle('card__like-button_active');
+          //           newCard.updateLikesCountElement(likesCountElement, data.likes.length);
+          //         })
+          //         .catch((error) => {
+          //           console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
+          //         });
+          //   } else {
+          //     api.setLike(cardData)
+          //         .then((data) => {
+          //           likeElement.classList.toggle('card__like-button_active');
+          //           newCard.updateLikesCountElement(likesCountElement, data.likes.length);
+          //         })
+          //         .catch((error) => {
+          //               console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
+          //             }
+          //         );
+          //   }
+          // },
           handleOpenImagePopup: (link, name) => { //добавляем колбэк открытия модального окна с изображением
             const popupWithImage = new PopupWithImage('.popup_type_image');
             popupWithImage.setEventListeners();
@@ -148,10 +206,7 @@ const popupAddCard = new PopupWithForm({
           }
 
         },'#card-template')
-        //newCard.generateCard()
          renderCard(newCard.generateCard(),cardsList)
-
-
       })
       .catch((error) => {
         console.log(`Ошибка добавления информации о новой карточке. Ошибка ${error}`);
@@ -200,53 +255,59 @@ Promise.all([api.getUserData(), api.getInitialCards()])
       const section = new Section({
         items: cards,
         renderer: (item) => {
-          //console.log(item)
           const card = new Card({ // деструктуризация нужна, чтобы передать колбэки
             id: item._id, // деструктуризация item
             name: item.name,
             link: item.link,
             likes: item.likes,
             owner: item.owner,
-            handleRemoveCard: (cardId) => { //добавляем колбэк удаления карточки
-              // const popupRemoveCard = new PopupDeleteCard('.popup_type_remove', cardId);
-              // popupRemoveCard.setEventListeners();
-              // popupRemoveCard.open(api);
-              const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
-              api.deleteCard(item)
-                .then(() => {
-                  cardToDelete.remove();
-                })
-                .catch((error) => {
-                  console.log(`Ошибка удаления карточки. Ошибка ${error}`);
-                }
-              );
-            },
-            handleLikeClick: (likeElement, id, likesCountElement) => { //добавляем колбэк клика по лайку
-              const isLiked = likeElement.classList.contains('card__like-button_active');
-              const cardData = {};
-              cardData._id = id;
 
-              if (isLiked) {
-                api.deleteLike(cardData)
-                  .then((data) => {
-                    likeElement.classList.toggle('card__like-button_active');
-                    card.updateLikesCountElement(likesCountElement, data.likes.length);
-                  })
-                  .catch((error) => {
-                    console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
-                  });
-              } else {
-                api.setLike(cardData)
-                  .then((data) => {
-                    likeElement.classList.toggle('card__like-button_active');
-                    card.updateLikesCountElement(likesCountElement, data.likes.length);
-                  })
-                  .catch((error) => {
-                    console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
-                  }
-                );
-              }
-            },
+            handleRemoveCard: handleRemoveCard,
+            // (cardId) => { //добавляем колбэк удаления карточки
+            //   // const popupRemoveCard = new PopupDeleteCard('.popup_type_remove', cardId);
+            //   // popupRemoveCard.setEventListeners();
+            //   // popupRemoveCard.open(api);
+            //  // console.log(item)
+            //   //console.log(cardId)
+            //
+            //   const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
+            //   api.deleteCard(item)
+            //     .then(() => {
+            //       console.log()
+            //       cardToDelete.remove();
+            //     })
+            //     .catch((error) => {
+            //       console.log(`Ошибка удаления карточки. Ошибка ${error}`);
+            //     }
+            //   );
+            // },
+            handleLikeClick: handleLikeClick,
+            // handleLikeClick: (likeElement, id, likesCountElement) => { //добавляем колбэк клика по лайку
+            //   const isLiked = likeElement.classList.contains('card__like-button_active');
+            //   const cardData = {};
+            //   cardData._id = id;
+            //
+            //   if (isLiked) {
+            //     api.deleteLike(cardData)
+            //       .then((data) => {
+            //         likeElement.classList.toggle('card__like-button_active');
+            //         card.updateLikesCountElement(likesCountElement, data.likes.length);
+            //       })
+            //       .catch((error) => {
+            //         console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
+            //       });
+            //   } else {
+            //     api.setLike(cardData)
+            //       .then((data) => {
+            //         likeElement.classList.toggle('card__like-button_active');
+            //         card.updateLikesCountElement(likesCountElement, data.likes.length);
+            //       })
+            //       .catch((error) => {
+            //         console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
+            //       }
+            //     );
+            //   }
+            // },
             handleOpenImagePopup: (link, name) => { //добавляем колбэк открытия модального окна с изображением
               const popupWithImage = new PopupWithImage('.popup_type_image');
               popupWithImage.setEventListeners();
