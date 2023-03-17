@@ -20,8 +20,8 @@ const submitButtonEditAvatar = userAvatarForm.querySelector('.form__submit');
 const handleUserAvatarFormSubmit = (evt) => {
   evt.preventDefault();
   renderLoading(true, submitButtonEditAvatar,'Сохранение...', 'Сохранить');
-  
   const userData = {};
+  //console.log(userData)
 
   userData.avatar = avatarInput.value;
 
@@ -49,5 +49,7 @@ export {
   editUserAvatarButton,
   userAvatarForm,
   handleUserAvatarFormSubmit,
-  handleOpenUserAvatarForm
+  handleOpenUserAvatarForm,
+  submitButtonEditAvatar,
+  popupEditUserAvatar
 };

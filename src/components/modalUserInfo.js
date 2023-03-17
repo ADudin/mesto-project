@@ -51,7 +51,7 @@ const handleOpenUserDataForm = () => {
 
 export {
   profileEditButton, 
-  userDataForm, 
-  handleUserDataFormSubmit, 
+  userDataForm,
+  handleUserDataFormSubmit,
   handleOpenUserDataForm
 };

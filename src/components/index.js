@@ -1,8 +1,9 @@
 import '../pages/index.css';
 
-import { 
-  setUserData, 
-  renderUserInfo
+import {
+    setUserData,
+    renderUserInfo,
+    userAvatarElement
 } from './profile.js';
 
 import {
@@ -27,7 +28,8 @@ import {
   editUserAvatarButton,
   userAvatarForm,
   handleUserAvatarFormSubmit,
-  handleOpenUserAvatarForm
+  handleOpenUserAvatarForm,
+  submitButtonEditAvatar
 } from './modalEditAvatar.js';
 
 import { PopupWithImage } from './modalImage.js';
@@ -42,7 +44,7 @@ import {
   //popupAddCard,
   newCardForm,
   //cardsList,
-  //handleNewCardFormSubmit,
+  handleNewCardFormSubmit,
   cardsList,
   submitButtonAddCard
 } from './modalAddCard.js';
@@ -58,6 +60,7 @@ import {
 import Section from "./section";
 import PopupWithForm from "./PopupWithForm";
 import {renderLoading} from "./utils";
+import UserInfo from "./UserInfo";
 
 
 profileEditButton.addEventListener('click', handleOpenUserDataForm);
@@ -101,16 +104,16 @@ const handleRemoveCard = (cardId) => {
       console.log(`Ошибка удаления карточки. Ошибка ${error}`);
     }
   );
-}
+};
 
 // счетчик лайков
-const updateLikesCountElement = (element, value) => {
+ const updateLikesCountElement = (element, value) => {
   if (value === 0) {
     element.textContent = '';
   } else {
     element.textContent = value;
   }
-}
+};
 
 // колбэк клика по лайку
 const handleLikeClick = (likeElement, id, likesCountElement) =>  { 
@@ -139,9 +142,15 @@ const handleLikeClick = (likeElement, id, likesCountElement) =>  {
       }
     );
   }
-}
+};
+// колбэк открытия большой картинки
+const handleOpenImagePopup = (link, name) => { //добавляем колбэк открытия модального окна с изображением
+    const popupWithImage = new PopupWithImage('.popup_type_image');
+    popupWithImage.setEventListeners();
+    popupWithImage.open(link, name);
+};
 
-
+// обработка попапа с добавлением картинки
 const popupAddCard = new PopupWithForm({ 
   selector: '.popup_type_add-new-card', 
   handleFormSubmit: (cardData) => {
@@ -193,12 +202,7 @@ const popupAddCard = new PopupWithForm({
           //         );
           //   }
           // },
-          handleOpenImagePopup: (link, name) => { //добавляем колбэк открытия модального окна с изображением
-            const popupWithImage = new PopupWithImage('.popup_type_image');
-            popupWithImage.setEventListeners();
-            popupWithImage.open(link, name);
-          }
-
+          handleOpenImagePopup: handleOpenImagePopup
         },'#card-template')
          renderCard(newCard.generateCard(),cardsList)
       })
@@ -215,8 +219,56 @@ const popupAddCard = new PopupWithForm({
 
 popupAddCard.setEventListeners();
 buttonAddCard.addEventListener('click', () => {
-  popupAddCard.open();
+    popupAddCard.open();
 });
+// обработка попапа с обновлением информации о пользователе
+
+// const popupUpdateUserInfo = new PopupWithForm({
+//     selector: '.popup_type_edit-user-data',
+//     handleFormSubmit: (userData) => {
+//         console.log(userData)
+//
+//
+//     }
+// })
+// popupUpdateUserInfo.setEventListeners()
+// profileEditButton.addEventListener('click', () => {
+//     popupUpdateUserInfo.open()
+// });
+
+
+// обработка обновления аватара
+
+// const handleUpdateUserAvatar = ( avatarInput) => {
+//     const userData = {};
+//     userData.avatar = avatarInput
+//      //renderLoading(true, submitButtonEditAvatar, 'Сохранение...', 'Сохранить');
+//     api.updateUserAvatar(userData)
+//         .then(() => {
+//             userAvatarElement.src = userData.avatar;)
+//             userAvatarElement.alt = 'Изображение аватара пользователя';
+//
+//         })
+//     // .catch((error) => {
+//     //     console.log(`Ошибка обновления аватара пользователя. Ошибка ${error}`);
+//     // })
+//     .finally(() => {
+//         // renderLoading(false, submitButtonEditAvatar, 'Сохранение...', 'Сохранить');
+//         popupUpdateAvatar.close();
+//     })
+//     console.log('конец функции const handleUpdateUserAvatar')
+// }
+//
+// const popupUpdateAvatar = new PopupWithForm({
+//     selector: '.popup_type_edit-user-avatar',
+//     handleFormSubmit: (userData) => {
+//         handleUpdateUserAvatar(userData)
+//     }
+// })
+// popupUpdateAvatar.setEventListeners();
+// editUserAvatarButton.addEventListener('click', () => {
+//     popupUpdateAvatar.open();
+// });
 
 
 // Promise.all([api.getUserData(), api.getInitialCards()])
@@ -302,11 +354,12 @@ Promise.all([api.getUserData(), api.getInitialCards()])
             //     );
             //   }
             // },
-            handleOpenImagePopup: (link, name) => { //добавляем колбэк открытия модального окна с изображением
-              const popupWithImage = new PopupWithImage('.popup_type_image');
-              popupWithImage.setEventListeners();
-              popupWithImage.open(link, name);
-            }
+              handleOpenImagePopup: handleOpenImagePopup
+            // handleOpenImagePopup: (link, name) => { //добавляем колбэк открытия модального окна с изображением
+            //   const popupWithImage = new PopupWithImage('.popup_type_image');
+            //   popupWithImage.setEventListeners();
+            //   popupWithImage.open(link, name);
+            // }
           },'#card-template'
         );
         
