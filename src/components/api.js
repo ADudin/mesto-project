@@ -42,7 +42,7 @@ class Api {
     .then(this._checkResponse);
   }
 
-  uploadNewCard = (cardData) => { // добавление новой карточки
+  uploadNewCard (cardData)  { // добавление новой карточки
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers:  this._headers,
