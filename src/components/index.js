@@ -64,14 +64,14 @@ import UserInfo from "./UserInfo";
 
 
 profileEditButton.addEventListener('click', handleOpenUserDataForm);
-editUserAvatarButton.addEventListener('click', handleOpenUserAvatarForm);
+//editUserAvatarButton.addEventListener('click', handleOpenUserAvatarForm);
 
 // buttonAddCard.addEventListener('click', () => {
 //   openPopup(popupAddCard);
 // });
 
 userDataForm.addEventListener('submit', handleUserDataFormSubmit);
-userAvatarForm.addEventListener('submit', handleUserAvatarFormSubmit);
+//userAvatarForm.addEventListener('submit', handleUserAvatarFormSubmit);
 //newCardForm.addEventListener('submit', handleNewCardFormSubmit);
 
 //enableValidation(validationParams);
@@ -239,36 +239,35 @@ buttonAddCard.addEventListener('click', () => {
 
 // обработка обновления аватара
 
-// const handleUpdateUserAvatar = ( avatarInput) => {
-//     const userData = {};
-//     userData.avatar = avatarInput
-//      //renderLoading(true, submitButtonEditAvatar, 'Сохранение...', 'Сохранить');
-//     api.updateUserAvatar(userData)
-//         .then(() => {
-//             userAvatarElement.src = userData.avatar;)
-//             userAvatarElement.alt = 'Изображение аватара пользователя';
-//
-//         })
-//     // .catch((error) => {
-//     //     console.log(`Ошибка обновления аватара пользователя. Ошибка ${error}`);
-//     // })
-//     .finally(() => {
-//         // renderLoading(false, submitButtonEditAvatar, 'Сохранение...', 'Сохранить');
-//         popupUpdateAvatar.close();
-//     })
-//     console.log('конец функции const handleUpdateUserAvatar')
-// }
-//
-// const popupUpdateAvatar = new PopupWithForm({
-//     selector: '.popup_type_edit-user-avatar',
-//     handleFormSubmit: (userData) => {
-//         handleUpdateUserAvatar(userData)
-//     }
-// })
-// popupUpdateAvatar.setEventListeners();
-// editUserAvatarButton.addEventListener('click', () => {
-//     popupUpdateAvatar.open();
-// });
+
+
+const handleUpdateUserAvatar = (avatarInput) => {
+    const userData = {};
+    userData.avatar = avatarInput['user-avatar']
+
+     renderLoading(true, submitButtonEditAvatar, 'Сохранение...', 'Сохранить');
+    api.updateUserAvatar(userData)
+        .then(() => {
+             userAvatarElement.src = userData.avatar;
+             userAvatarElement.alt = 'Изображение аватара пользователя';
+        })
+    .catch((error) => {
+        console.log(`Ошибка обновления аватара пользователя. Ошибка ${error}`);
+    })
+    .finally(() => {
+        renderLoading(false, submitButtonEditAvatar, 'Сохранение...', 'Сохранить');
+        popupUpdateAvatar.close();
+    })
+}
+
+const popupUpdateAvatar = new PopupWithForm({
+    selector: '.popup_type_edit-user-avatar',
+    handleFormSubmit: handleUpdateUserAvatar
+})
+popupUpdateAvatar.setEventListeners();
+editUserAvatarButton.addEventListener('click', () => {
+    popupUpdateAvatar.open();
+});
 
 
 // Promise.all([api.getUserData(), api.getInitialCards()])
