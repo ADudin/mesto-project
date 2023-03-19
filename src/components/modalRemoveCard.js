@@ -61,25 +61,14 @@ class PopupDeleteCard extends Popup {
     );
   }
 
-  // setEventListeners(api) {
-  //   super.setEventListeners();
-  //   this._buttonConfirm.addEventListener('click', () => {
-  //     this._handleRemoveCard(api);
-  //   });
-  // }
-
   open(api) {
     super.open();
     this._buttonConfirm.addEventListener('click', () => {
-      console.log('click');
       this._handleRemoveCard(api, this._cardId);
     });
   }
 }
 
 export {
-  PopupDeleteCard,
-  //popupRemoveCard,
-  //buttonConfirm,
-  //handleCardRemove
+  PopupDeleteCard
 }

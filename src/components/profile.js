@@ -1,8 +1,7 @@
+import { userNameElement, userJobElement } from "./constants.js";
+
 const profile = document.querySelector('.profile');
 const userAvatarElement = profile.querySelector('.profile__avatar');
-const userNameElement = profile.querySelector('.profile__user-name');
-const userJobElement = profile.querySelector('.profile__user-description');
-
 const setUserData = (userData) => {
   profile.setAttribute('data-id', userData._id);
 }

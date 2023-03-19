@@ -1,8 +1,9 @@
 import { 
-  profile,
+  profile} from './profile.js';
+import {
   userNameElement,
   userJobElement
-} from './profile.js';
+} from "./constants.js";
 
 import {
   closePopup,
