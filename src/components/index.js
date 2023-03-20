@@ -68,10 +68,30 @@ export const api = new Api ({
 //   );
 // };
 
+// const handleRemoveCard = (cardId) => {
+//   const popupDeleteCard = new PopupDeleteCard('.popup_type_remove', cardId);
+//   popupDeleteCard.open(api);
+// };
+
+
 const handleRemoveCard = (cardId) => {
-  const popupDeleteCard = new PopupDeleteCard('.popup_type_remove', cardId);
-  popupDeleteCard.open(api);
-};
+    const popupDeleteCard = new PopupDeleteCard({
+        selector: '.popup_type_remove',
+        cardId: cardId,
+        handleRemoveCard: (cardId) =>{
+            const cardData = {};
+            cardData._id = cardId
+            const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
+            api.deleteCard(cardData)
+                .then(() => {
+                    cardToDelete.remove();
+                    popupDeleteCard.close()
+                })
+        }
+    })
+    popupDeleteCard.open()
+}
+
 
 // счетчик лайков
 

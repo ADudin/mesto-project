@@ -11,6 +11,8 @@ const profileEditButton = profile.querySelector('.profile__edit-button');
 const userDataForm = document.forms['profile'];
 const submitButtonEditProfile = userDataForm.querySelector('.form__submit');
 
+//const butonConfirmRemoveCard = document.querySelector('.popup__button')
+
 export {profile,
     buttonAddCard,
     newCardForm,
@@ -20,5 +22,6 @@ export {profile,
     editUserAvatarButton,
     submitButtonEditAvatar,
     userAvatarElement,
-    submitButtonEditProfile
+    submitButtonEditProfile,
+   // butonConfirmRemoveCard
 };

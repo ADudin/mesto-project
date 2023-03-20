@@ -32,46 +32,68 @@ import { renderLoading } from './utils.js';
 //buttonConfirm.addEventListener('click', handleCardRemove);
 
 class PopupDeleteCard extends Popup {
-  constructor(selector, cardId) {
+  constructor({selector, cardId, handleRemoveCard}) {
     super(selector);
     this._buttonConfirm = document.querySelector('.popup__button');
     this._cardId = cardId;
-
-
+    this._handleRemoveCard = handleRemoveCard;
   }
 
-  _handleRemoveCard(api, cardId) {
+  // handleRemoveCard(cardId) {
+  //
+  //   // const cardData = {};
+  //   // cardData._id = cardId;
+  //   // console.log(cardId)
+  //   // const cardToDelete = document.querySelector(`.card[data-id='${cardData._id}']`);
+  //   // cardToDelete.remove();
+  //
+  //   //   renderLoading(true, this._buttonConfirm, 'Удаление...', 'Да');
+  //   //
+  //   //   api.deleteCard(cardData)
+  //   //     .then(() => {
+  //   //       console.log('test')
+  //   //
+  //   //       this.close(api);
+  //   //     })
+  //   //     // .catch((error) => {
+  //   //     //   console.log(`Ошибка удаления карточки. Ошибка ${error}`);
+  //   //     // })
+  //   //     .finally(() => {
+  //   //       renderLoading(false, this._buttonConfirm, 'Удаление...', 'Да');
+  //   //     }
+  //   //   );
+  //   // }
+  //
+  // }
 
-    const cardData = {};
-    cardData._id = cardId;
-    console.log(cardId)
-    const cardToDelete = document.querySelector(`.card[data-id='${cardData._id}']`);
-    cardToDelete.remove();
+    //
+    // _handleButtonConfirmClick() {
+    //     this._handleRemoveCard(this._cardId);
+    // }
 
-    renderLoading(true, this._buttonConfirm, 'Удаление...', 'Да');
 
-    api.deleteCard(cardData)
-      .then(() => {
-        console.log('test')
 
-        this.close(api);
-      })
-      // .catch((error) => {
-      //   console.log(`Ошибка удаления карточки. Ошибка ${error}`);
-      // })
-      .finally(() => {
-        renderLoading(false, this._buttonConfirm, 'Удаление...', 'Да');
-      }
+  close() {
+    super.close();
+    this._buttonConfirm.removeEventListener('click',
+        //this._handleButtonConfirmClick
+        () =>{
+          this._handleRemoveCard(this._cardId);
+        }
+
     );
   }
 
-
-
-  open(api) {
+  open() {
     super.open();
-    this._buttonConfirm.addEventListener('click', () => {
-      this._handleRemoveCard(api, this._cardId);
-    });
+    this._buttonConfirm.addEventListener('click',
+        //this._handleButtonConfirmClick
+        () =>{
+
+          this._handleRemoveCard(this._cardId);
+        }
+
+    );
   }
 }
 
