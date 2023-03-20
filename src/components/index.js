@@ -1,40 +1,36 @@
 import '../pages/index.css';
 
-import { Api } from './api.js';
+import Api from './api.js';
 
-import { PopupWithImage } from './PopupWithImage.js';
+import PopupWithImage from './PopupWithImage.js';
 
-import {
-  renderCard,
-  Card
-} from './card.js';
+import Card from './card.js';
 
-import {
-  validationParams,
-  FormValidator
-} from './validate.js';
+import FormValidator from './validate.js';
 
 import Section from "./section.js";
 
 import PopupWithForm from "./PopupWithForm.js";
 
-import {renderLoading} from "./utils.js";
+import { 
+  renderLoading, 
+  renderCard 
+} from "./utils.js";
 
 import UserInfo from "./UserInfo.js";
 
 import {
-    profile,
-    buttonAddCard,
-    cardsList,
-    submitButtonAddCard,
-    editUserAvatarButton,
-    submitButtonEditAvatar,
-    userAvatarElement,
-    profileEditButton,
-    submitButtonEditProfile
+  profile,
+  buttonAddCard,
+  cardsList,
+  submitButtonAddCard,
+  editUserAvatarButton,
+  submitButtonEditAvatar,
+  userAvatarElement,
+  profileEditButton,
+  submitButtonEditProfile,
+  validationParams
 } from './constants.js';
-
-import { PopupDeleteCard } from './modalRemoveCard.js';
 
 const formList = Array.from(document.querySelectorAll(validationParams.formSelector));
 
@@ -44,7 +40,7 @@ formList.forEach((formElement) => {
 });
 
 
-export const api = new Api ({
+const api = new Api ({
   baseUrl: 'https://mesto.nomoreparties.co/v1/plus-cohort-21',
   headers: {
     authorization: 'e22a7236-eb1c-4145-a157-f86fa0ccbc4e',
@@ -54,44 +50,19 @@ export const api = new Api ({
 
 // колбэк удаления карточки
 
-// const handleRemoveCard = (cardId) => {
-//   const cardData = {};
-//   cardData._id = cardId
-//   const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
-//   api.deleteCard(cardData)
-//     .then(() => {
-//       cardToDelete.remove();
-//     })
-//     .catch((error) => {
-//       console.log(`Ошибка удаления карточки. Ошибка ${error}`);
-//     }
-//   );
-// };
-
-// const handleRemoveCard = (cardId) => {
-//   const popupDeleteCard = new PopupDeleteCard('.popup_type_remove', cardId);
-//   popupDeleteCard.open(api);
-// };
-
-
 const handleRemoveCard = (cardId) => {
-    const popupDeleteCard = new PopupDeleteCard({
-        selector: '.popup_type_remove',
-        cardId: cardId,
-        handleRemoveCard: (cardId) =>{
-            const cardData = {};
-            cardData._id = cardId
-            const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
-            api.deleteCard(cardData)
-                .then(() => {
-                    cardToDelete.remove();
-                    popupDeleteCard.close()
-                })
-        }
+  const cardData = {};
+  cardData._id = cardId
+  const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
+  api.deleteCard(cardData)
+    .then(() => {
+      cardToDelete.remove();
     })
-    popupDeleteCard.open()
-}
-
+    .catch((error) => {
+      console.log(`Ошибка удаления карточки. Ошибка ${error}`);
+    }
+  );
+};
 
 // счетчик лайков
 
@@ -136,9 +107,9 @@ const handleLikeClick = (likeElement, id, likesCountElement) =>  {
 // колбэк открытия большой картинки
 
 const handleOpenImagePopup = (link, name) => { //добавляем колбэк открытия модального окна с изображением
-    const popupWithImage = new PopupWithImage('.popup_type_image');
-    popupWithImage.setEventListeners();
-    popupWithImage.open(link, name);
+  const popupWithImage = new PopupWithImage('.popup_type_image');
+  popupWithImage.setEventListeners();
+  popupWithImage.open(link, name);
 };
 
 // обработка попапа с добавлением картинки
@@ -217,22 +188,24 @@ profileEditButton.addEventListener('click', () => {
 // обработка обновления аватара
 
 const handleUpdateUserAvatar = (avatarInput) => {
-    const userData = {};
-    userData.avatar = avatarInput['user-avatar'];
+  const userData = {};
+  userData.avatar = avatarInput['user-avatar'];
 
-    renderLoading(true, submitButtonEditAvatar, 'Сохранение...', 'Сохранить');
-    api.updateUserAvatar(userData)
-        .then(() => {
-          userAvatarElement.src = userData.avatar;
-          userAvatarElement.alt = 'Изображение аватара пользователя';
-          popupUpdateAvatar.close();
-        })
+  renderLoading(true, submitButtonEditAvatar, 'Сохранение...', 'Сохранить');
+
+  api.updateUserAvatar(userData)
+    .then(() => {
+      userAvatarElement.src = userData.avatar;
+      userAvatarElement.alt = 'Изображение аватара пользователя';
+      popupUpdateAvatar.close();
+    })
     .catch((error) => {
         console.log(`Ошибка обновления аватара пользователя. Ошибка ${error}`);
     })
     .finally(() => {
       renderLoading(false, submitButtonEditAvatar, 'Сохранение...', 'Сохранить');
-    })
+    }
+  )
 }
 
 const popupUpdateAvatar = new PopupWithForm({

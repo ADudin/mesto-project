@@ -1,7 +1,6 @@
 import { checkResponse } from './utils.js';
 
-
-class Api {
+export default class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
@@ -15,21 +14,27 @@ class Api {
     return Promise.reject(`Ошибка ${res.status}`);
   }
 
-  getInitialCards() { // получение карточек от сервера
+  // получение карточек от сервера
+
+  getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
     })
     .then(this._checkResponse);
   }
 
-  getUserData () { // получение информации о пользователе
+  // получение информации о пользователе
+
+  getUserData () {
      return fetch(`${this._baseUrl}/users/me`, {
        headers: this._headers,
      })
     .then(this._checkResponse);
   }
 
-  updateUserData (userData) { // обновление информации о пользователе
+  // обновление информации о пользователе
+
+  updateUserData (userData) {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -42,7 +47,9 @@ class Api {
     .then(this._checkResponse);
   }
 
-  uploadNewCard (cardData)  { // добавление новой карточки
+  // добавление новой карточки
+
+  uploadNewCard (cardData)  {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers:  this._headers,
@@ -54,8 +61,9 @@ class Api {
     .then(this._checkResponse);
   }
 
-  deleteCard(cardData) { // удаление карточки
-    console.log(cardData)
+  // удаление карточки
+
+  deleteCard(cardData) {
     return fetch(`${this._baseUrl}/cards/${cardData._id}`, {
       method: 'DELETE',
       headers: this._headers,
@@ -63,7 +71,9 @@ class Api {
     .then(this._checkResponse);
   }
 
-  setLike(cardData) { // добавление лайка
+  // добавление лайка
+
+  setLike(cardData) {
     return fetch(`${this._baseUrl}/cards/likes/${cardData._id}`, {
       method: 'PUT',
       headers: this._headers,
@@ -71,7 +81,9 @@ class Api {
     .then(checkResponse);
   }
 
-  deleteLike (cardData) { // удаление лайка
+  // удаление лайка
+
+  deleteLike (cardData) {
     return fetch(`${this._baseUrl}/cards/likes/${cardData._id}`, {
       method: 'DELETE',
       headers: this._headers,
@@ -79,7 +91,9 @@ class Api {
     .then(checkResponse);
   }
 
-  updateUserAvatar (userData) { // обноваление аватара пользователя
+  // обноваление аватара пользователя
+
+  updateUserAvatar (userData) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
@@ -87,9 +101,4 @@ class Api {
     })
     .then(this._checkResponse);
   }
-}
-
-
-export {
-  Api,
 };

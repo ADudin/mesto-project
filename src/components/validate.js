@@ -1,16 +1,4 @@
-const validationParams = {
-  formSelector: '.form',
-  fieldsetSelector: '.form__set',
-  inputSelector: '.form__item',
-  getErrorInputSelector: (inputId) => `.${inputId}-input-error`,
-  submitButtonSelector: '.form__submit',
-  inactiveButtonClass: 'form__submit_inactive',
-  inputErrorClass: 'form__item_type_error',
-  errorClass: 'form__item-error_active'
-};
-
-//================================================================================================
-class FormValidator {
+export default class FormValidator {
   constructor(validationParams, formElement) {
     this._validationParams = validationParams;
     this._formElement = formElement;
@@ -74,10 +62,9 @@ class FormValidator {
      });
     const fieldsetList = Array.from(this._formElement.querySelectorAll(this._validationParams.fieldsetSelector));
 
-      fieldsetList.forEach((fieldset) => {
-        this._setEventListeners(this._validationParams, fieldset);
-      });
-
+    fieldsetList.forEach((fieldset) => {
+      this._setEventListeners(this._validationParams, fieldset);
+    });
   }
 
   _hasInvalidinput(inputList) {
@@ -94,11 +81,5 @@ class FormValidator {
       buttonElement.removeAttribute('disabled');
       buttonElement.classList.remove(validationParams.inactiveButtonClass);
     }
-
   }
-}
-
-export {
-  validationParams,
-  FormValidator
 };

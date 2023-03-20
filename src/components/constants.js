@@ -11,17 +11,27 @@ const profileEditButton = profile.querySelector('.profile__edit-button');
 const userDataForm = document.forms['profile'];
 const submitButtonEditProfile = userDataForm.querySelector('.form__submit');
 
-//const butonConfirmRemoveCard = document.querySelector('.popup__button')
+const validationParams = {
+  formSelector: '.form',
+  fieldsetSelector: '.form__set',
+  inputSelector: '.form__item',
+  getErrorInputSelector: (inputId) => `.${inputId}-input-error`,
+  submitButtonSelector: '.form__submit',
+  inactiveButtonClass: 'form__submit_inactive',
+  inputErrorClass: 'form__item_type_error',
+  errorClass: 'form__item-error_active'
+};
 
-export {profile,
-    buttonAddCard,
-    newCardForm,
-    profileEditButton,
-    cardsList,
-    submitButtonAddCard,
-    editUserAvatarButton,
-    submitButtonEditAvatar,
-    userAvatarElement,
-    submitButtonEditProfile,
-   // butonConfirmRemoveCard
+export {
+  profile,
+  buttonAddCard,
+  newCardForm,
+  profileEditButton,
+  cardsList,
+  submitButtonAddCard,
+  editUserAvatarButton,
+  submitButtonEditAvatar,
+  userAvatarElement,
+  submitButtonEditProfile,
+  validationParams
 };

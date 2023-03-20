@@ -1,11 +1,7 @@
 import { profile } from './constants.js';
+import { renderCard } from './utils.js';
 
-const renderCard = (card, container) => {
-
-  container.prepend(card);
-}
-
- class Card {
+export default class Card {
   constructor({
       id,
       name,
@@ -94,7 +90,4 @@ const renderCard = (card, container) => {
 
     return this._card;
   }
-}
-
-
-export {renderCard, Card};
+};

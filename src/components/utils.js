@@ -14,7 +14,12 @@ const checkResponse = (res) => {
   return Promise.reject(`Ошибка ${res.status}`);
 }
 
+const renderCard = (card, container) => {
+  container.prepend(card);
+}
+
 export {
   renderLoading,
-  checkResponse
+  checkResponse,
+  renderCard
 };
