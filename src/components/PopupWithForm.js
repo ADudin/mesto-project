@@ -1,4 +1,4 @@
- import {Popup} from "./modal";
+ import {Popup} from "./popup.js";
 
 export default class PopupWithForm extends Popup {
     constructor({selector, handleFormSubmit}) {
@@ -17,7 +17,6 @@ export default class PopupWithForm extends Popup {
     }
 
     setInputValues(data) {
-      console.log(data);
       this._inputList.forEach(input => {
         if (data.hasOwnProperty(input.name)) {
           input.value = data[input.name];

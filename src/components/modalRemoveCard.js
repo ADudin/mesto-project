@@ -1,9 +1,8 @@
-import { 
-  closePopup, 
+import {
   Popup 
-} from './modal.js';
+} from './popup.js';
 
-import { deleteCard } from './api';
+//import { deleteCard } from './api';
 import { renderLoading } from './utils.js';
 
 // const popupRemoveCard = document.querySelector('.popup_type_remove');
@@ -37,29 +36,36 @@ class PopupDeleteCard extends Popup {
     super(selector);
     this._buttonConfirm = document.querySelector('.popup__button');
     this._cardId = cardId;
+
+
   }
 
   _handleRemoveCard(api, cardId) {
+
     const cardData = {};
     cardData._id = cardId;
-    
+    console.log(cardId)
     const cardToDelete = document.querySelector(`.card[data-id='${cardData._id}']`);
-    
+    cardToDelete.remove();
+
     renderLoading(true, this._buttonConfirm, 'Удаление...', 'Да');
-    
+
     api.deleteCard(cardData)
       .then(() => {
-        cardToDelete.remove();
-        this.close();
+        console.log('test')
+
+        this.close(api);
       })
-      .catch((error) => {
-        console.log(`Ошибка удаления карточки. Ошибка ${error}`);
-      })
+      // .catch((error) => {
+      //   console.log(`Ошибка удаления карточки. Ошибка ${error}`);
+      // })
       .finally(() => {
         renderLoading(false, this._buttonConfirm, 'Удаление...', 'Да');
       }
     );
   }
+
+
 
   open(api) {
     super.open();
@@ -72,3 +78,5 @@ class PopupDeleteCard extends Popup {
 export {
   PopupDeleteCard
 }
+
+

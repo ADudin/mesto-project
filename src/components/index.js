@@ -1,28 +1,13 @@
 import '../pages/index.css';
 
-import { userAvatarElement } from './profile.js';
-
 import { Api } from './api.js';
 
-import { profileEditButton } from './modalUserInfo.js';
-
-import { 
-  editUserAvatarButton,
-  submitButtonEditAvatar
-} from './modalEditAvatar.js';
-
-import { PopupWithImage } from './modalImage.js';
+import { PopupWithImage } from './PopupWithImage.js';
 
 import {
   renderCard,
   Card
 } from './card.js';
-
-import {
-  buttonAddCard,
-  cardsList,
-  submitButtonAddCard
-} from './modalAddCard.js';
 
 import {
   validationParams,
@@ -37,9 +22,19 @@ import {renderLoading} from "./utils.js";
 
 import UserInfo from "./UserInfo.js";
 
-import { profile } from './constants.js';
+import {
+    profile,
+    buttonAddCard,
+    cardsList,
+    submitButtonAddCard,
+    editUserAvatarButton,
+    submitButtonEditAvatar,
+    userAvatarElement,
+    profileEditButton,
+    submitButtonEditProfile
+} from './constants.js';
 
-//import { PopupDeleteCard } from './modalRemoveCard.js';
+import { PopupDeleteCard } from './modalRemoveCard.js';
 
 const formList = Array.from(document.querySelectorAll(validationParams.formSelector));
 
@@ -59,24 +54,24 @@ export const api = new Api ({
 
 // колбэк удаления карточки
 
-const handleRemoveCard = (cardId) => {
-  const cardData = {};
-  cardData._id = cardId
-  const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
-  api.deleteCard(cardData)
-    .then(() => {
-      cardToDelete.remove();
-    })
-    .catch((error) => {
-      console.log(`Ошибка удаления карточки. Ошибка ${error}`);
-    }
-  );
-};
-
 // const handleRemoveCard = (cardId) => {
-//   const popupDeleteCard = new PopupDeleteCard('.popup_type_remove', cardId);
-//   popupDeleteCard.open(api);
+//   const cardData = {};
+//   cardData._id = cardId
+//   const cardToDelete = document.querySelector(`.card[data-id='${cardId}']`);
+//   api.deleteCard(cardData)
+//     .then(() => {
+//       cardToDelete.remove();
+//     })
+//     .catch((error) => {
+//       console.log(`Ошибка удаления карточки. Ошибка ${error}`);
+//     }
+//   );
 // };
+
+const handleRemoveCard = (cardId) => {
+  const popupDeleteCard = new PopupDeleteCard('.popup_type_remove', cardId);
+  popupDeleteCard.open(api);
+};
 
 // счетчик лайков
 
@@ -162,8 +157,8 @@ buttonAddCard.addEventListener('click', () => {
   popupAddCard.open();
 });
 
-// обработка попапа с обновлением информации о пользователе
 
+// обновление информации о пользователе
 const userInfo = new UserInfo(
   '.profile__user-name',
   '.profile__user-description',
@@ -172,17 +167,17 @@ const userInfo = new UserInfo(
 
 
 const handleUpdateUserInfo = (userData) => {
-  renderLoading(true, submitButtonEditAvatar, 'Сохранение...', 'Сохранить');
+  renderLoading(true, submitButtonEditProfile, 'Сохранение...', 'Сохранить');
   api.updateUserData(userData)
     .then(() => {
-      userInfo.setUserInfo(userData.name, userData.about, userData.avatar);
+      userInfo.setUserInfo(userData.name, userData.about);
       popupUpdateUserInfo.close();
     })
     .catch((error) => {
       console.log(`Ошибка обновления данных пользователя. Ошибка ${error}`);
     })
     .finally(() => {
-      renderLoading(false, submitButtonEditAvatar, 'Сохранение...', 'Сохранить');
+      renderLoading(false, submitButtonEditProfile, 'Сохранение...', 'Сохранить');
     }
   )
 }

@@ -1,4 +1,3 @@
-import {api} from "./index";
 
 export default class UserInfo {
     constructor(userNameSelector, userAboutSelector, userAvatarSelector) {
