@@ -1,4 +1,3 @@
-import { checkResponse } from './utils.js';
 
 export default class Api {
   constructor(options) {
@@ -78,7 +77,7 @@ export default class Api {
       method: 'PUT',
       headers: this._headers,
     })
-    .then(checkResponse);
+    .then(this._checkResponse);
   }
 
   // удаление лайка
@@ -88,7 +87,7 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers,
     })
-    .then(checkResponse);
+    .then(this._checkResponse);
   }
 
   // обноваление аватара пользователя

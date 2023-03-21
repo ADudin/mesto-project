@@ -1,21 +1,21 @@
 import '../pages/index.css';
 
-import Api from './api.js';
+import Api from './Api.js';
 
 import PopupWithImage from './PopupWithImage.js';
 
-import Card from './card.js';
+import Card from './Card.js';
 
-import FormValidator from './validate.js';
+import FormValidator from './FormValidator.js';
 
-import Section from "./section.js";
+import Section from "./Section.js";
 
 import PopupWithForm from "./PopupWithForm.js";
 
 import { 
   renderLoading, 
   renderCard 
-} from "./utils.js";
+} from "../utils/utils.js";
 
 import UserInfo from "./UserInfo.js";
 
@@ -30,7 +30,7 @@ import {
   profileEditButton,
   submitButtonEditProfile,
   validationParams
-} from './constants.js';
+} from '../utils/constants.js';
 
 const formList = Array.from(document.querySelectorAll(validationParams.formSelector));
 

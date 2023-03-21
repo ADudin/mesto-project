@@ -2,7 +2,6 @@ export default class FormValidator {
   constructor(validationParams, formElement) {
     this._validationParams = validationParams;
     this._formElement = formElement;
-
   }
 
   _showInputError(validationParams, formElement, inputElement, errorMessage) {
@@ -35,23 +34,19 @@ export default class FormValidator {
     }
   }
 
-  _setEventListeners(validationParams, formElement) {
-    const inputList = Array.from(formElement.querySelectorAll(validationParams.inputSelector));
-    const buttonElement = formElement.querySelector(validationParams.submitButtonSelector);
-
-    this._toggleButtonState(validationParams, inputList, buttonElement);
-
-    formElement.parentElement.addEventListener('reset', () => {
-      this._toggleButtonState(validationParams, inputList, buttonElement);
-      setTimeout(() => {
-        this._toggleButtonState(validationParams, inputList, buttonElement);
-      }, 0);
+  _setEventListeners() {
+    const inputList = Array.from(this._formElement.querySelectorAll(this._validationParams.inputSelector));
+    const buttonElement = this._formElement.querySelector(this._validationParams.submitButtonSelector);
+    const toggleButtonState = () => this._toggleButtonState(this._validationParams, inputList, buttonElement);
+    toggleButtonState();
+    this._formElement.parentElement.addEventListener('reset', () => {
+      toggleButtonState();
+      setTimeout(toggleButtonState, 0);
     });
-
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
-        this._checkInputValidity(validationParams, formElement, inputElement);
-        this._toggleButtonState(validationParams, inputList, buttonElement);
+        this._checkInputValidity(this._validationParams, this._formElement, inputElement);
+        toggleButtonState();
       });
     });
   }
@@ -60,11 +55,12 @@ export default class FormValidator {
     this._formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
      });
-    const fieldsetList = Array.from(this._formElement.querySelectorAll(this._validationParams.fieldsetSelector));
+    //const fieldsetList = Array.from(this._formElement.querySelectorAll(this._validationParams.fieldsetSelector));
 
-    fieldsetList.forEach((fieldset) => {
-      this._setEventListeners(this._validationParams, fieldset);
-    });
+    //fieldsetList.forEach((fieldset) => {
+      //this._setEventListeners(this._validationParams, fieldset);
+      this._setEventListeners();
+    //});
   }
 
   _hasInvalidinput(inputList) {
