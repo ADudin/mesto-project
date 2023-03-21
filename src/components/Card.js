@@ -1,4 +1,3 @@
-
 export default class Card {
   constructor({
       id,

@@ -130,14 +130,14 @@ const popupAddCard = new PopupWithForm({
           handleLikeClick: handleLikeClick,
           handleOpenImagePopup: handleOpenImagePopup
         },'#card-template')
-         renderCard(newCard.generateCard(),cardsList)
+        renderCard(newCard.generateCard(),cardsList);
+        popupAddCard.close();
       })
       .catch((error) => {
         console.log(`Ошибка добавления информации о новой карточке. Ошибка ${error}`);
       })
       .finally(() => {
         renderLoading(false, submitButtonAddCard, 'Сохранение...', 'Создать');
-        popupAddCard.close();
       }
     );
   }
