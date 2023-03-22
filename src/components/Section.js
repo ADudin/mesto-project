@@ -11,24 +11,26 @@ export default class Section {
   
   setCard(card){
     this._container.append(card);
+    // cards.forEach((card) => {
+    //   console.log(card);
+    // });
   }
   
   clear(){
     this._container.innerHTML = '';
   }
 
-  prependItem(card){
-    this._container.prepend(card)
-  }
+  // prependItem(card){
+  //   this._container.prepend(card)
+  // }
 
   renderCards(items) {
     this.clear();
-//console.log(items)
+    //console.log(items)
 
     items.forEach(item => {
-       this._renderer(item);
-
-
+       //this._renderer(item);
+       this.setCard(this._renderer(item));
     })
 
   }

@@ -18,6 +18,9 @@ export default class Card {
     this._handleRemoveCard = handleRemoveCard;
     this._handleLikeClick = handleLikeClick;
     this._handleOpenImagePopup = handleOpenImagePopup;
+    this._element = document.querySelector('.profile');
+    this._userId = this._element.getAttribute('data-id');
+    this._likedByUser = likes.some(like => like._id === this._userId); 
   }
 
   //получение тимплейта
@@ -51,24 +54,31 @@ export default class Card {
     }
   }
 
+  _isLiked() {
+    //console.log(this._userId);
+    return this._likedByUser;
+  }
+
+  
+
     // _handleLikeClick(id) {
-    //   console.log(id)
-    //     const isLiked = this._cardLikeButton.classList.contains('card__like-button_active');
+    //   //console.log(id)
+    //     this._isLiked = 
     //     // const cardData = {};
     //     // cardData._id = id;
-    //     if (isLiked){
+    //     if (this._isLiked){
     //         this._cardLikeButton.classList.toggle('card__like-button_active');
     //         this.updateLikesCountElement()
     //     } else {
     //         this._cardLikeButton.classList.toggle('card__like-button_active');
     //         this.updateLikesCountElement()
     //     }
-    //
+    
     // }
 
   _setEventListeners() {
     this._cardLikeButton.addEventListener('click', (evt) => {
-      this._handleLikeClick(evt.target, this._id, this._cardLikeCount);
+      this._handleLikeClick(evt.target, this._id, this._cardLikeCount, this._isLiked());
     });
 
     this._cardRemoveButton.addEventListener('click', () => {
@@ -89,8 +99,8 @@ export default class Card {
     //console.log(this._cardLikeCount)
     this._cardRemoveButton = this._card.querySelector('.card__remove-button');
     //this._userId = profile.getAttribute('data-id');
-   this._element = document.querySelector('.profile');
-   this._userId = this._element.getAttribute('data-id');// не забыть поправить
+    //this._element = document.querySelector('.profile');
+    //this._userId = this._element.getAttribute('data-id');// не забыть поправить
 
 
     this._card.querySelector('.card__title').textContent = this._name;
@@ -108,6 +118,7 @@ export default class Card {
 
 
     this._setEventListeners()
+
     return this._card;
   }
 };

@@ -66,13 +66,13 @@ const handleRemoveCard = (cardId) => {
 
 // счетчик лайков
 
- const updateLikesCountElement = (element, value) => {
-  if (value === 0) {
-    element.textContent = '';
-  } else {
-    element.textContent = value;
-  }
-};
+//  const updateLikesCountElement = (element, value) => {
+//   if (value === 0) {
+//     element.textContent = '';
+//   } else {
+//     element.textContent = value;
+//   }
+// };
 
 // колбэк клика по лайку
 
@@ -85,29 +85,29 @@ const handleLikeClick = (likeElement, id, likesCountElement) =>  {
 
   cardData._id = id;
 
-console.log(cardData._id)
+  console.log(cardData._id)
 
 
-  if (isLiked) {
-    api.deleteLike(cardData)
-      .then((data) => {
-        likeElement.classList.toggle('card__like-button_active');
-        updateLikesCountElement(likesCountElement, data.likes.length);
-      })
-      .catch((error) => {
-        console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
-      });
-  } else {
-    api.setLike(cardData)
-      .then((data) => {
-        likeElement.classList.toggle('card__like-button_active');
-        updateLikesCountElement(likesCountElement, data.likes.length);
-      })
-      .catch((error) => {
-        console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
-      }
-    );
-  }
+  // if (isLiked) {
+  //   api.deleteLike(cardData)
+  //     .then((data) => {
+  //       likeElement.classList.toggle('card__like-button_active');
+  //       updateLikesCountElement(likesCountElement, data.likes.length);
+  //     })
+  //     .catch((error) => {
+  //       console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
+  //     });
+  // } else {
+  //   api.setLike(cardData)
+  //     .then((data) => {
+  //       likeElement.classList.toggle('card__like-button_active');
+  //       updateLikesCountElement(likesCountElement, data.likes.length);
+  //     })
+  //     .catch((error) => {
+  //       console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
+  //     }
+  //   );
+  // }
 };
 
 // колбэк открытия большой картинки
@@ -128,11 +128,37 @@ function createCard (item) {
     likes: item.likes,
     owner: item.owner,
     handleRemoveCard: handleRemoveCard,
-    handleLikeClick: handleLikeClick,
+    handleLikeClick: (likeElement, id, likesCountElement, isLiked) => {
+      //console.log(newCard.id);
+      const cardData = {};
+      cardData._id = id;
+
+      if (isLiked) {
+        api.deleteLike(item)
+          .then((data) => {
+            likeElement.classList.toggle('card__like-button_active');
+            //updateLikesCountElement(likesCountElement, data.likes.length);
+          })
+          .catch((error) => {
+            console.log(`Ошибка удаления лайка у карточки. Ошибка ${error}`);
+          });
+      } else {
+        api.setLike(item)
+          .then((data) => {
+            likeElement.classList.toggle('card__like-button_active');
+            //updateLikesCountElement(likesCountElement, data.likes.length);
+          })
+          .catch((error) => {
+            console.log(`Ошибка добавления лайка карточке. Ошибка ${error}`);
+          }
+        );
+      }
+    },
     handleOpenImagePopup: handleOpenImagePopup
-  },'#card-template')
-  //console.log(newCard)
-  return newCard
+  },'#card-template').generateCard();
+
+  //console.log(newCard);
+  return newCard;
 }
 
 
@@ -256,23 +282,23 @@ editUserAvatarButton.addEventListener('click', () => {
 //             link: item.link,
 //             likes: item.likes,
 //             owner: item.owner,
-//
+
 //             handleRemoveCard: handleRemoveCard,
 //             handleLikeClick: handleLikeClick,
 //             handleOpenImagePopup: handleOpenImagePopup
 //           },'#card-template'
 //         );
-//
+
 //         const cardElement = card.generateCard();
 //         section.setCard(cardElement);
-//
-//
+
+
 //           // const cardElement = createCard (item)
 //           // cardElement.generateCard();
 //           // section.setCard(cardElement);
 //       }
 //     }, '.cards__list');
-//
+
 //     section.renderCards(cards);
 //   })
 //   .catch((error) => {
@@ -309,10 +335,10 @@ Promise.all([api.getUserData(), api.getInitialCards()])
 
 
       //console.log(cards)
-      console.log(cards)
-      section.setCard(cards)
-      createCard(cards).generateCard()
-      section.renderCards(cards)
+      //section.setCard(cards)
+      section.renderCards(cards);
+      //createCard(cards).generateCard()
+      //section.renderCards(cards)
 
 
 
