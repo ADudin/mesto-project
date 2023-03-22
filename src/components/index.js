@@ -12,9 +12,9 @@ import Section from "./Section.js";
 
 import PopupWithForm from "./PopupWithForm.js";
 
-import { 
-  renderLoading, 
-  renderCard 
+import {
+  renderLoading,
+  renderCard
 } from "../utils/utils.js";
 
 import UserInfo from "./UserInfo.js";
@@ -76,11 +76,17 @@ const handleRemoveCard = (cardId) => {
 
 // колбэк клика по лайку
 
-const handleLikeClick = (likeElement, id, likesCountElement) =>  { 
+const handleLikeClick = (likeElement, id, likesCountElement) =>  {
+  //console.log(likeElement)
+  //console.log( id)
+  //console.log(likesCountElement)
   const isLiked = likeElement.classList.contains('card__like-button_active');
   const cardData = {};
-  
+
   cardData._id = id;
+
+console.log(cardData._id)
+
 
   if (isLiked) {
     api.deleteLike(cardData)
@@ -112,6 +118,30 @@ const handleOpenImagePopup = (link, name) => { //добавляем колбэк
   popupWithImage.open(link, name);
 };
 
+
+
+function createCard (item) {
+  const newCard = new Card({
+    id: item._id,
+    name: item.name,
+    link: item.link,
+    likes: item.likes,
+    owner: item.owner,
+    handleRemoveCard: handleRemoveCard,
+    handleLikeClick: handleLikeClick,
+    handleOpenImagePopup: handleOpenImagePopup
+  },'#card-template')
+  //console.log(newCard)
+  return newCard
+}
+
+
+const section = new Section({
+  //items: items,
+  renderer: createCard
+} ,'.cards__list')
+
+
 // обработка попапа с добавлением картинки
 
 const popupAddCard = new PopupWithForm({ 
@@ -120,17 +150,11 @@ const popupAddCard = new PopupWithForm({
     renderLoading(true, submitButtonAddCard, 'Сохранение...', 'Создать');
     api.uploadNewCard(cardData)
       .then((card) => {
-        const newCard = new Card({
-          id: card._id,
-          name: card.name,
-          link: card.link,
-          likes: card.likes,
-          owner: card.owner,
-          handleRemoveCard: handleRemoveCard,
-          handleLikeClick: handleLikeClick,
-          handleOpenImagePopup: handleOpenImagePopup
-        },'#card-template')
-        renderCard(newCard.generateCard(),cardsList);
+        console.log(card)
+        //const cardElement = createCard (card)
+       // renderCard(cardElement.generateCard(),cardsList);
+        //const cardElement = {};
+         section.prependItem(createCard(card).generateCard())
         popupAddCard.close();
       })
       .catch((error) => {
@@ -219,34 +243,83 @@ editUserAvatarButton.addEventListener('click', () => {
   popupUpdateAvatar.open();
 });
 
+// Promise.all([api.getUserData(), api.getInitialCards()])
+//     .then(([userData, cards]) => {
+//       profile.setAttribute('data-id', userData._id);
+//       userInfo.setUserInfo(userData.name, userData.about, userData.avatar);
+//       const section = new Section({
+//         items: cards,
+//         renderer: (item) => {
+//           const card = new Card({ // деструктуризация нужна, чтобы передать колбэки
+//             id: item._id, // деструктуризация item
+//             name: item.name,
+//             link: item.link,
+//             likes: item.likes,
+//             owner: item.owner,
+//
+//             handleRemoveCard: handleRemoveCard,
+//             handleLikeClick: handleLikeClick,
+//             handleOpenImagePopup: handleOpenImagePopup
+//           },'#card-template'
+//         );
+//
+//         const cardElement = card.generateCard();
+//         section.setCard(cardElement);
+//
+//
+//           // const cardElement = createCard (item)
+//           // cardElement.generateCard();
+//           // section.setCard(cardElement);
+//       }
+//     }, '.cards__list');
+//
+//     section.renderCards(cards);
+//   })
+//   .catch((error) => {
+//     console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
+//   }
+// );
 Promise.all([api.getUserData(), api.getInitialCards()])
     .then(([userData, cards]) => {
       profile.setAttribute('data-id', userData._id);
       userInfo.setUserInfo(userData.name, userData.about, userData.avatar);
-      const section = new Section({
-        items: cards,
-        renderer: (item) => {
-          const card = new Card({ // деструктуризация нужна, чтобы передать колбэки
-            id: item._id, // деструктуризация item
-            name: item.name,
-            link: item.link,
-            likes: item.likes,
-            owner: item.owner,
+      // const section = new Section({
+      //   items: cards,
+      //   renderer: (item) => {
+      //     const card = new Card({ // деструктуризация нужна, чтобы передать колбэки
+      //           id: item._id, // деструктуризация item
+      //           name: item.name,
+      //           link: item.link,
+      //           likes: item.likes,
+      //           owner: item.owner,
+      //
+      //           handleRemoveCard: handleRemoveCard,
+      //           handleLikeClick: handleLikeClick,
+      //           handleOpenImagePopup: handleOpenImagePopup
+      //         },'#card-template'
+      //     );
+      //
+      //     const cardElement = card.generateCard();
+      //     section.setCard(cardElement);
+      //     // const cardElement = createCard (item)
+      //     // cardElement.generateCard();
+      //     // section.setCard(cardElement);
+      //   }
+      // }, '.cards__list');
 
-            handleRemoveCard: handleRemoveCard,
-            handleLikeClick: handleLikeClick,
-            handleOpenImagePopup: handleOpenImagePopup
-          },'#card-template'
-        );
-        
-        const cardElement = card.generateCard();
-        section.setCard(cardElement);
-      }
-    }, '.cards__list');
 
-    section.renderCards();
-  })
-  .catch((error) => {
-    console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
-  }
-);
+      //console.log(cards)
+      console.log(cards)
+      section.setCard(cards)
+      createCard(cards).generateCard()
+      section.renderCards(cards)
+
+
+
+      //section.renderCards(cards);
+    })
+    // .catch((error) => {
+    //       console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
+    //     }
+    // );
+

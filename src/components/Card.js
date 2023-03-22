@@ -32,11 +32,11 @@ export default class Card {
   }
 
   // счетчик лайков
-  updateLikesCountElement(element, value) {
-    if (value === 0) {
-      element.textContent = '';
+  updateLikesCountElement() {
+    if (this._likes.length === 0) {
+        this._cardLikeCount.textContent = '';
     } else {
-      element.textContent = value;
+        this._cardLikeCount.textContent = this._likes.length;
     }
   }
 
@@ -50,6 +50,21 @@ export default class Card {
       })
     }
   }
+
+    // _handleLikeClick(id) {
+    //   console.log(id)
+    //     const isLiked = this._cardLikeButton.classList.contains('card__like-button_active');
+    //     // const cardData = {};
+    //     // cardData._id = id;
+    //     if (isLiked){
+    //         this._cardLikeButton.classList.toggle('card__like-button_active');
+    //         this.updateLikesCountElement()
+    //     } else {
+    //         this._cardLikeButton.classList.toggle('card__like-button_active');
+    //         this.updateLikesCountElement()
+    //     }
+    //
+    // }
 
   _setEventListeners() {
     this._cardLikeButton.addEventListener('click', (evt) => {
@@ -69,8 +84,9 @@ export default class Card {
     this._card = this._getElement();
 
     this._cardImage = this._card.querySelector('.card__image');
-    this._cardLikeButton = this._card.querySelector('.card__like-button');
-    this._cardLikeCount = this._card.querySelector('.card__like-value');
+    this._cardLikeButton = this._card.querySelector('.card__like-button');//
+    this._cardLikeCount = this._card.querySelector('.card__like-value');//
+    //console.log(this._cardLikeCount)
     this._cardRemoveButton = this._card.querySelector('.card__remove-button');
     //this._userId = profile.getAttribute('data-id');
    this._element = document.querySelector('.profile');
@@ -82,7 +98,7 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = `Фотография ${this._name}`;
 
-    this.updateLikesCountElement(this._cardLikeCount, this._likes.length);
+    this.updateLikesCountElement();
 
     if (this._userId !== this._owner._id) {
       this._cardRemoveButton.remove();
