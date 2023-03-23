@@ -6,11 +6,6 @@ const renderLoading = (isLoading, button, loadingText, text) => {
   }
 }
 
-// const renderCard = (card, container) => {
-//   container.prepend(card);
-// }
-
 export {
-  renderLoading,
-  //renderCard
+  renderLoading
 };

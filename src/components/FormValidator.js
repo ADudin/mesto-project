@@ -55,12 +55,8 @@ export default class FormValidator {
     this._formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
      });
-    //const fieldsetList = Array.from(this._formElement.querySelectorAll(this._validationParams.fieldsetSelector));
-
-    //fieldsetList.forEach((fieldset) => {
-      //this._setEventListeners(this._validationParams, fieldset);
       this._setEventListeners();
-    //});
+
   }
 
   _hasInvalidinput(inputList) {

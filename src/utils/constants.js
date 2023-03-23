@@ -1,7 +1,6 @@
 const profile = document.querySelector('.profile');
 const buttonAddCard = profile.querySelector('.profile__add-button');
 const newCardForm = document.forms['add-new-card'];
-const cardsList = document.querySelector('.cards__list');
 const submitButtonAddCard = newCardForm.querySelector('.form__submit');
 const editUserAvatarButton = profile.querySelector('.profile__edit-avatar-button');
 const userAvatarForm = document.forms['user-avatar'];
@@ -27,7 +26,6 @@ export {
   buttonAddCard,
   newCardForm,
   profileEditButton,
-  cardsList,
   submitButtonAddCard,
   editUserAvatarButton,
   submitButtonEditAvatar,
