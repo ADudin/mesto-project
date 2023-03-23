@@ -13,6 +13,7 @@ export default class Card {
     this._name = name;
     this._link = link;
     this._likes = likes;
+    this._likesCount = likes.length;
     this._owner = owner;
     this._templateSelector = templateSelector;
     this._handleRemoveCard = handleRemoveCard;
@@ -34,51 +35,31 @@ export default class Card {
     return cardElement;
   }
 
-  // счетчик лайков
-  updateLikesCountElement() {
-    if (this._likes.length === 0) {
-        this._cardLikeCount.textContent = '';
+  // обработчик лайков
+  updateLikesCountElement(isLiked, likesCount) {
+    this._likedByUser = isLiked;
+    this._likesCount = likesCount;
+    
+    if (isLiked) {
+      this._cardLikeButton.classList.add('card__like-button_active');
     } else {
-        this._cardLikeCount.textContent = this._likes.length;
+      this._cardLikeButton.classList.remove('card__like-button_active');
+    }
+    
+    if (likesCount === 0) {
+      this._cardLikeCount.textContent = '';
+    } else {
+      this._cardLikeCount.textContent = likesCount;
     }
   }
 
-  //постановка лайка
-  _updateIsCardLikedElement(likes, userId, element) {
-    if (likes.length !== 0) {
-      likes.forEach((like) => {
-        if (Object.values(like).includes(userId)) {
-          element.classList.add('card__like-button_active');
-        }
-      })
-    }
-  }
-
-  _isLiked() {
-    //console.log(this._userId);
+  isLiked() {
     return this._likedByUser;
   }
 
-  
-
-    // _handleLikeClick(id) {
-    //   //console.log(id)
-    //     this._isLiked = 
-    //     // const cardData = {};
-    //     // cardData._id = id;
-    //     if (this._isLiked){
-    //         this._cardLikeButton.classList.toggle('card__like-button_active');
-    //         this.updateLikesCountElement()
-    //     } else {
-    //         this._cardLikeButton.classList.toggle('card__like-button_active');
-    //         this.updateLikesCountElement()
-    //     }
-    
-    // }
-
   _setEventListeners() {
     this._cardLikeButton.addEventListener('click', (evt) => {
-      this._handleLikeClick(evt.target, this._id, this._cardLikeCount, this._isLiked());
+      this._handleLikeClick(this);
     });
 
     this._cardRemoveButton.addEventListener('click', () => {
@@ -96,11 +77,7 @@ export default class Card {
     this._cardImage = this._card.querySelector('.card__image');
     this._cardLikeButton = this._card.querySelector('.card__like-button');//
     this._cardLikeCount = this._card.querySelector('.card__like-value');//
-    //console.log(this._cardLikeCount)
     this._cardRemoveButton = this._card.querySelector('.card__remove-button');
-    //this._userId = profile.getAttribute('data-id');
-    //this._element = document.querySelector('.profile');
-    //this._userId = this._element.getAttribute('data-id');// не забыть поправить
 
 
     this._card.querySelector('.card__title').textContent = this._name;
@@ -108,14 +85,11 @@ export default class Card {
     this._cardImage.src = this._link;
     this._cardImage.alt = `Фотография ${this._name}`;
 
-    this.updateLikesCountElement();
+    this.updateLikesCountElement(this._likedByUser, this._likesCount);
 
     if (this._userId !== this._owner._id) {
       this._cardRemoveButton.remove();
     }
-
-    this._updateIsCardLikedElement(this._likes, this._userId, this._cardLikeButton);
-
 
     this._setEventListeners()
 
