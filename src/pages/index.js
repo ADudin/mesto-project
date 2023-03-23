@@ -1,22 +1,22 @@
-import '../pages/index.css';
+import './index.css';
 
-import Api from './Api.js';
+import Api from '../components/Api.js';
 
-import PopupWithImage from './PopupWithImage.js';
+import PopupWithImage from '../components/PopupWithImage.js';
 
-import Card from './Card.js';
+import Card from '../components/Card.js';
 
-import FormValidator from './FormValidator.js';
+import FormValidator from '../components/FormValidator.js';
 
-import Section from "./Section.js";
+import Section from "../components/Section.js";
 
-import PopupWithForm from "./PopupWithForm.js";
+import PopupWithForm from "../components/PopupWithForm.js";
 
 import {
   renderLoading
 } from "../utils/utils.js";
 
-import UserInfo from "./UserInfo.js";
+import UserInfo from "../components/UserInfo.js";
 
 import {
   profile,
