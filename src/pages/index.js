@@ -24,7 +24,6 @@ import {
   submitButtonAddCard,
   editUserAvatarButton,
   submitButtonEditAvatar,
-  userAvatarElement,
   profileEditButton,
   submitButtonEditProfile,
   validationParams
@@ -158,8 +157,8 @@ const userInfo = new UserInfo(
 const handleUpdateUserInfo = (userData) => {
   renderLoading(true, submitButtonEditProfile, 'Сохранение...', 'Сохранить');
   api.updateUserData(userData)
-    .then(() => {
-      userInfo.setUserInfo(userData.name, userData.about, userData._id, userData.avatar);
+    .then((res) => {
+      userInfo.setUserInfo(res)
       popupUpdateUserInfo.close();
     })
     .catch((error) => {
@@ -194,9 +193,8 @@ const handleUpdateUserAvatar = (avatarInput) => {
   renderLoading(true, submitButtonEditAvatar, 'Сохранение...', 'Сохранить');
 
   api.updateUserAvatar(userData)
-    .then(() => {
-      userAvatarElement.src = userData.avatar;
-      userAvatarElement.alt = 'Изображение аватара пользователя';
+    .then((res) => {
+      userInfo.setUserInfo(res)
       popupUpdateAvatar.close();
     })
     .catch((error) => {
@@ -224,10 +222,7 @@ Promise.all([api.getUserData(), api.getInitialCards()])
     profile.setAttribute('data-id', userData._id);
 
     userInfo.setUserInfo(
-      userData.name,
-      userData.about,
-      userData._id,
-      userData.avatar
+      userData
     );
 
     section.renderCards(cards);

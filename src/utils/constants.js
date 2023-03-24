@@ -5,7 +5,6 @@ const submitButtonAddCard = newCardForm.querySelector('.form__submit');
 const editUserAvatarButton = profile.querySelector('.profile__edit-avatar-button');
 const userAvatarForm = document.forms['user-avatar'];
 const submitButtonEditAvatar = userAvatarForm.querySelector('.form__submit');
-const userAvatarElement = profile.querySelector('.profile__avatar');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 const userDataForm = document.forms['profile'];
 const submitButtonEditProfile = userDataForm.querySelector('.form__submit');
@@ -29,7 +28,6 @@ export {
   submitButtonAddCard,
   editUserAvatarButton,
   submitButtonEditAvatar,
-  userAvatarElement,
   submitButtonEditProfile,
   validationParams
 };

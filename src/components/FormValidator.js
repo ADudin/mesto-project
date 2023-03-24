@@ -40,7 +40,6 @@ export default class FormValidator {
     const toggleButtonState = () => this._toggleButtonState(this._validationParams, inputList, buttonElement);
     toggleButtonState();
     this._formElement.parentElement.addEventListener('reset', () => {
-      toggleButtonState();
       setTimeout(toggleButtonState, 0);
     });
     inputList.forEach((inputElement) => {
