@@ -38,10 +38,11 @@ export default class FormValidator {
     const inputList = Array.from(this._formElement.querySelectorAll(this._validationParams.inputSelector));
     const buttonElement = this._formElement.querySelector(this._validationParams.submitButtonSelector);
     const toggleButtonState = () => this._toggleButtonState(this._validationParams, inputList, buttonElement);
-    toggleButtonState();
+    
     this._formElement.parentElement.addEventListener('reset', () => {
       setTimeout(toggleButtonState, 0);
     });
+
     inputList.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._checkInputValidity(this._validationParams, this._formElement, inputElement);
@@ -54,8 +55,7 @@ export default class FormValidator {
     this._formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
      });
-      this._setEventListeners();
-
+    this._setEventListeners();
   }
 
   _hasInvalidinput(inputList) {

@@ -103,7 +103,7 @@ const handleOpenImagePopup = (link, name) => { //добавляем колбэк
 
 // функция создания карточки
 
-function createCard (item) {
+function createCard(item) {
   const newCard = new Card({
     id: item._id,
     name: item.name,
@@ -231,4 +231,3 @@ Promise.all([api.getUserData(), api.getInitialCards()])
     console.log(`Ошибка загрузки информации о пользователе/карточек. Ошибка ${error}`);
   }
 );
-
